@@ -1,5 +1,5 @@
 """
-auth.py - Sistema de Autenticación, Seguridad y Control de Acceso por Roles (RF-10)
+auth.py - Sistema de Autenticación, Seguridad y Control de Acceso por Roles
 Diseñado para SQLite con compatibilidad directa para migración a Supabase / PostgreSQL.
 
 Incluye:

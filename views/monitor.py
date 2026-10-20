@@ -17,8 +17,8 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-01, RF-03 & RF-10</span>
-                    <span class="badge-pill-soft">Captura & Roles</span>
+                    <span class="badge-pill-solid">RF-01 & RF-03</span>
+                    <span class="badge-pill-soft">Captura</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
                     Monitor del Entorno
@@ -55,7 +55,7 @@ def render():
             st.markdown(f'''
             <div class="blueprint-card" style="margin-bottom: 16px; border-left: 3px solid #171717;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Acceso Restringido en Modo Captura (RF-10)</span>
+                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Acceso Restringido en Modo Captura</span>
                     <span class="{pill_cls}">{role_badge}</span>
                 </div>
                 <p style="font-size: 13px; color: #737373; margin: 0; line-height: 1.45;">

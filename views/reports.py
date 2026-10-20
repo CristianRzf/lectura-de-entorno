@@ -17,8 +17,8 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-09 & RF-10</span>
-                    <span class="badge-pill-soft">Documentación & Roles</span>
+                    <span class="badge-pill-solid">RF-09</span>
+                    <span class="badge-pill-soft">Documentación</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
                     Generador de Informes Estratégicos

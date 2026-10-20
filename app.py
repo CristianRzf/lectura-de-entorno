@@ -27,7 +27,7 @@ st.set_page_config(
 # Inicializar base de datos SQLite con datos semilla de Smurfit WestRock si es nueva
 database.init_db(seed_if_empty=True)
 
-# Control de Acceso y Verificación de Autenticación (RF-10)
+# Control de Acceso y Verificación de Autenticación
 if not auth.is_authenticated():
     import views.login as login_view
     login_view.render()
@@ -337,10 +337,10 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # ----------------- SESIÓN AUTENTICADA (RF-10) -----------------
+    # ----------------- SESIÓN AUTENTICADA -----------------
     st.markdown('''
     <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; color: #737373; font-weight: 600; margin-bottom: 6px;">
-        Sesión Autenticada · RF-10
+        Sesión Autenticada
     </div>
     ''', unsafe_allow_html=True)
 
@@ -393,7 +393,7 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-# Definición de páginas dinámicas según el Rol Autenticado (RF-10)
+# Definición de páginas dinámicas según el Rol Autenticado
 if active_role == models.UserRole.DISENADOR.value:
     # Rol Diseñador: Acceso completo incluyendo Captura del Entorno y Calibración
     pages = {
@@ -443,7 +443,7 @@ nav = st.navigation(pages)
 with st.sidebar:
     st.markdown("<hr style='border: none; border-top: 1px solid #e5e5e5; margin: 18px 0 12px 0;'>", unsafe_allow_html=True)
 
-    with st.expander("Matriz de Permisos (RF-10)"):
+    with st.expander("Matriz de Permisos"):
         st.markdown('''
         **Gobernanza de Roles:**
         - **Diseñador:** Modelado PESTEL, registro de nuevos factores, calibración de probabilidad/impacto y reseteo de datos.

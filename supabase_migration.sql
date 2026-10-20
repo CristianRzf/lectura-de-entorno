@@ -1,5 +1,5 @@
 -- =============================================================================
--- ESQUEMA DE MIGRACIÓN: SQLITE A SUPABASE (POSTGRESQL) CON RLS Y ROLES (RF-10)
+-- ESQUEMA DE MIGRACIÓN: SQLITE A SUPABASE (POSTGRESQL) CON RLS Y ROLES
 -- Smurfit WestRock Colombia — Planta Industrial Yumbo
 -- =============================================================================
 -- Este script permite migrar la base de datos de prototipo (SQLite) directamente a
@@ -7,7 +7,7 @@
 -- por roles (Usuarios, Decisores, Diseñadores).
 -- =============================================================================
 
--- 1. TABLA DE USUARIOS Y GOBERNANZA DE ACCESO (RF-10)
+-- 1. TABLA DE USUARIOS Y GOBERNANZA DE ACCESO
 -- -----------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.usuarios (
     id BIGSERIAL PRIMARY KEY,

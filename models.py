@@ -1,6 +1,6 @@
 """
 models.py - Definición de constantes, categorías PESTEL, escalas de impacto, lógica de puntuación
-y modelo de roles de usuario (RF-10) para Smurfit WestRock Colombia.
+y modelo de roles de usuario para Smurfit WestRock Colombia.
 Alineado con el sistema de diseño clínico/monocromático (Canvas, Paper, Ink, Mid Gray, Hairline, Ember).
 """
 
@@ -34,7 +34,7 @@ class FactorStatus(str, Enum):
     CERRADO = "Cerrado / Descartado"
 
 # =============================================================================
-# REQUISITO FUNCIONAL RF-10: GESTIÓN DE ROLES Y PERMISOS
+# GESTIÓN DE ROLES Y PERMISOS
 # Roles: Usuarios, Decisores, Diseñadores
 # =============================================================================
 

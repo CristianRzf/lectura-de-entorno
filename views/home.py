@@ -20,7 +20,7 @@ def render():
                     <span class="badge-pill-solid">PESTEL</span>
                     <span class="badge-pill-soft">Smurfit WestRock Colombia</span>
                     <span class="badge-pill-outline">Planta Yumbo · Valle del Cauca</span>
-                    <span class="badge-pill-soft">RF-10: Roles Activos</span>
+                    <span class="badge-pill-soft">Roles Activos</span>
                 </div>
                 <h1 style="margin: 4px 0 6px 0; font-size: 32px; font-weight: 600; letter-spacing: -0.9px; color: #0a0a0a;">
                     Lectura del Entorno Estratégico
@@ -194,13 +194,12 @@ def render():
     st.plotly_chart(bar_fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Requisito Funcional RF-10: Roles y Gobernanza
+    # Roles y Gobernanza
     curr_role = st.session_state.get("current_role", models.UserRole.DECISOR.value)
     st.markdown('''
     <div class="blueprint-card" style="margin-top: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <div>
-                <span class="badge-pill-solid">RF-10</span>
                 <span style="font-size: 16px; font-weight: 600; color: #0a0a0a; margin-left: 8px;">
                     Control de Acceso y Modelo de Roles (Usuarios, Decisores, Diseñadores)
                 </span>

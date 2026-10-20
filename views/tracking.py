@@ -16,8 +16,8 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-08 & RF-10</span>
-                    <span class="badge-pill-soft">Seguimiento & Roles</span>
+                    <span class="badge-pill-solid">RF-08</span>
+                    <span class="badge-pill-soft">Seguimiento</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
                     Seguimiento y Evolución Histórica
@@ -135,7 +135,7 @@ def render():
                 st.info("No se registran eventos en la bitácora.")
 
     # =========================================================================
-    # TAB 2: ACTUALIZAR FACTOR (RF-10)
+    # TAB 2: ACTUALIZAR FACTOR
     # =========================================================================
     with tab_edicion:
         curr_role = st.session_state.get("current_role", "Usuario")
@@ -153,7 +153,7 @@ def render():
             st.markdown(f'''
             <div class="blueprint-card" style="margin-bottom: 16px; border-left: 3px solid #171717;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Modo Consulta (RF-10)</span>
+                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Modo Consulta</span>
                     <span class="badge-pill-soft">Rol: {curr_role}</span>
                 </div>
                 <p style="font-size: 13px; color: #737373; margin: 0; line-height: 1.45;">
@@ -168,7 +168,7 @@ def render():
             st.markdown(f'''
             <div class="blueprint-card" style="margin-bottom: 16px; border-left: 3px solid #0a0a0a;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Modo Decisor — Gestión de Estado Estratégico (RF-10)</span>
+                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Modo Decisor — Gestión de Estado Estratégico</span>
                     <span class="badge-pill-solid">Rol: Decisor</span>
                 </div>
                 <p style="font-size: 13px; color: #737373; margin: 0; line-height: 1.45;">
@@ -280,7 +280,7 @@ def render():
                     "categoria_pestel": "Dimensión",
                     "fecha_registro": "Fecha",
                     "usuario": "Usuario / Autor",
-                    "rol": "Rol (RF-10)",
+                    "rol": "Rol",
                     "observacion": "Observación",
                     "cambio_estado": "Estado Notificado"
                 }),

@@ -49,7 +49,7 @@ def init_db(seed_if_empty: bool = True):
     )
     """)
 
-    # Tabla de historial de seguimiento (con rol RF-10)
+    # Tabla de historial de seguimiento con rol
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS historial_seguimiento (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -63,7 +63,7 @@ def init_db(seed_if_empty: bool = True):
     )
     """)
 
-    # Tabla de recomendaciones estratégicas (con autor y rol RF-10)
+    # Tabla de recomendaciones estratégicas con autor y rol
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS recomendaciones (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -100,7 +100,7 @@ def init_db(seed_if_empty: bool = True):
 
     conn.commit()
 
-    # Inicializar tabla de usuarios y autenticación con roles (RF-10)
+    # Inicializar tabla de usuarios y autenticación con roles
     import auth
     auth.init_users_table(conn)
 
@@ -658,7 +658,7 @@ def add_factor(data: Dict[str, Any]) -> int:
     ))
     factor_id = cursor.lastrowid
 
-    # Registrar en historial con rol RF-10
+    # Registrar en historial con rol
     cursor.execute("""
     INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, rol, cambio_estado)
     VALUES (?, ?, ?, ?, ?, ?)
@@ -741,7 +741,7 @@ def get_factor_history(factor_id: int) -> List[Dict[str, Any]]:
     return [dict(r) for r in rows]
 
 def add_history_entry(factor_id: int, observacion: str, usuario: str = "Analista de Entorno", cambio_estado: str = "", rol: str = "Usuario"):
-    """Registra una nueva observación o seguimiento con rol RF-10."""
+    """Registra una nueva observación o seguimiento con rol."""
     conn = get_connection()
     cursor = conn.cursor()
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")

@@ -42,11 +42,11 @@ El sistema analiza de forma estructurada las seis dimensiones del macroentorno:
 | **RF-07. Apoyo a la toma de decisiones** | Recomendaciones vinculadas a factores evaluados, evidencia, prioridad y plan de acción. | Módulo de **Recomendaciones** vinculado a factores, con áreas responsables y control de estado. |
 | **RF-08. Seguimiento y actualización** | Registrar nuevas observaciones, editar factores y consultar bitácora histórica. | Módulo de **Seguimiento Histórico** con timeline de novedades y formulario de reevaluación. |
 | **RF-09. Generación de informes** | Generar informes ejecutivos que resuman cambios, impactos, riesgos y recomendaciones. | Generador dinámico descargable en **PDF formal (ReportLab)** y **Excel (.xlsx, openpyxl)**. |
-| **RF-10. Gestión de Roles y Permisos** | Control de acceso basado en roles dentro del aplicativo: Roles (**Usuarios**, **Decisores**, **Diseñadores**) con responsabilidades y permisos diferenciados. | Selector de rol y perfil activo en panel lateral, control de acceso granular (RBAC) en formularios de captura, gobernanza de decisiones, calibración técnica y auditoría. |
+| **Gestión de Roles y Permisos** | Control de acceso basado en roles dentro del aplicativo: Roles (**Usuarios**, **Decisores**, **Diseñadores**) con responsabilidades y permisos diferenciados. | Selector de rol y perfil activo en panel lateral, control de acceso granular (RBAC) en formularios de captura, gobernanza de decisiones, calibración técnica y auditoría. |
 
 ---
 
-## 👥 Modelo de Roles y Control de Acceso (RF-10)
+## 👥 Modelo de Roles y Control de Acceso
 
 El aplicativo implementa un modelo de **Control de Acceso Basado en Roles (RBAC)** con tres perfiles funcionales, garantizando la rigurosidad fáctica del análisis y la gobernanza directiva en **Smurfit WestRock Colombia (Planta Yumbo)**:
 
@@ -155,7 +155,7 @@ c:\lectura-de-entorno\
 ├── app.py                      # Punto de entrada con gatekeeper de autenticación y navegación por rol
 ├── auth.py                     # Módulo de seguridad: PBKDF2 hashing, intentos fallidos y bloqueo
 ├── database.py                 # Gestión SQLite: esquemas, migraciones, seed data y consultas
-├── models.py                   # Enums PESTEL, escalas de severidad, roles (RF-10) y permisos
+├── models.py                   # Enums PESTEL, escalas de severidad, roles y permisos
 ├── supabase_migration.sql      # Script de migración DDL + Row Level Security (RLS) para Supabase
 ├── requirements.txt           # Dependencias del proyecto
 ├── README.md                  # Documentación integral
