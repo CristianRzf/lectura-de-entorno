@@ -1,12 +1,12 @@
 """
-models.py - Definición de constantes, categorías PESTEL, escalas de impacto y lógica de puntuación
-para Smurfit WestRock Colombia.
+models.py - Definición de constantes, categorías PESTEL, escalas de impacto, lógica de puntuación
+y modelo de roles de usuario (RF-10) para Smurfit WestRock Colombia.
 Alineado con el sistema de diseño clínico/monocromático (Canvas, Paper, Ink, Mid Gray, Hairline, Ember).
 """
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, Tuple
+from typing import Dict, Tuple, List, Any
 
 class PESTELCategory(str, Enum):
     POLITICO = "Político"
@@ -32,6 +32,112 @@ class FactorStatus(str, Enum):
     EN_MITIGACION = "En Mitigación / Acción"
     MITIGADO = "Mitigado / Capitalizado"
     CERRADO = "Cerrado / Descartado"
+
+# =============================================================================
+# REQUISITO FUNCIONAL RF-10: GESTIÓN DE ROLES Y PERMISOS
+# Roles: Usuarios, Decisores, Diseñadores
+# =============================================================================
+
+class UserRole(str, Enum):
+    USUARIO = "Usuario"
+    DECISOR = "Decisor"
+    DISENADOR = "Diseñador"
+
+ROLE_CONFIG: Dict[str, Dict[str, Any]] = {
+    UserRole.USUARIO.value: {
+        "label": "Usuario (Consulta General & Operaciones)",
+        "short_title": "Usuario",
+        "badge": "Modo Consulta",
+        "color": "#737373",
+        "pill_class": "badge-pill-soft",
+        "description": "Visualización analítica del entorno, consulta de radar PESTEL, matriz 5x5 y trazabilidad de fuentes. Puede registrar observaciones en la bitácora histórica.",
+        "permissions": {
+            "view_dashboards": True,
+            "export_reports": True,
+            "add_observation": True,
+            "create_factor": False,
+            "edit_factor_params": False,
+            "change_factor_status": False,
+            "create_recommendation": False,
+            "manage_recommendation_status": False,
+            "reset_database": False
+        }
+    },
+    UserRole.DECISOR.value: {
+        "label": "Decisor (Gobernanza & Decisiones Estratégicas)",
+        "short_title": "Decisor",
+        "badge": "Modo Decisor",
+        "color": "#0a0a0a",
+        "pill_class": "badge-pill-solid",
+        "description": "Liderazgo directivo y toma de decisiones para Smurfit WestRock Yumbo. Formulación y aprobación de planes de acción estratégicos, asignación de áreas y transición de estados ejecutivos.",
+        "permissions": {
+            "view_dashboards": True,
+            "export_reports": True,
+            "add_observation": True,
+            "create_factor": False,
+            "edit_factor_params": False,
+            "change_factor_status": True,
+            "create_recommendation": True,
+            "manage_recommendation_status": True,
+            "reset_database": False
+        }
+    },
+    UserRole.DISENADOR.value: {
+        "label": "Diseñador (Modelado & Arquitectura PESTEL)",
+        "short_title": "Diseñador",
+        "badge": "Modo Diseñador",
+        "color": "#0a0a0a",
+        "pill_class": "badge-pill-solid",
+        "description": "Arquitectura metodológica y captura del macroentorno. Parametrización de factores, calibración de probabilidad e impacto (1-5), gestión de fuentes oficiales y mantenimiento de datos.",
+        "permissions": {
+            "view_dashboards": True,
+            "export_reports": True,
+            "add_observation": True,
+            "create_factor": True,
+            "edit_factor_params": True,
+            "change_factor_status": True,
+            "create_recommendation": True,
+            "manage_recommendation_status": False,
+            "reset_database": True
+        }
+    }
+}
+
+DEFAULT_PROFILES: List[Dict[str, Any]] = [
+    {
+        "id": "prof_decisor",
+        "nombre": "Dr. Carlos Mendoza",
+        "cargo": "Director General de Operaciones & Estrategia Yumbo",
+        "rol": UserRole.DECISOR.value,
+        "avatar": "CM"
+    },
+    {
+        "id": "prof_disenador",
+        "nombre": "Ing. Sofía Ramírez",
+        "cargo": "Especialista en Inteligencia Competitiva & PESTEL",
+        "rol": UserRole.DISENADOR.value,
+        "avatar": "SR"
+    },
+    {
+        "id": "prof_usuario",
+        "nombre": "Laura Gómez",
+        "cargo": "Analista de Monitoreo & Operaciones de Planta",
+        "rol": UserRole.USUARIO.value,
+        "avatar": "LG"
+    }
+]
+
+def check_permission(role: str, permission_key: str) -> bool:
+    """Valida si un rol tiene habilitado un permiso específico."""
+    cfg = ROLE_CONFIG.get(role)
+    if not cfg:
+        return False
+    return cfg["permissions"].get(permission_key, False)
+
+def get_role_badge(role: str) -> Tuple[str, str]:
+    """Retorna la etiqueta legible y la clase de estilo para el badge del rol."""
+    cfg = ROLE_CONFIG.get(role, ROLE_CONFIG[UserRole.USUARIO.value])
+    return cfg["badge"], cfg["pill_class"]
 
 # Mapeo de metadatos PESTEL en sistema monocromático con soporte de tokens
 PESTEL_META = {

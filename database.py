@@ -49,7 +49,7 @@ def init_db(seed_if_empty: bool = True):
     )
     """)
 
-    # Tabla de historial de seguimiento
+    # Tabla de historial de seguimiento (con rol RF-10)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS historial_seguimiento (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,12 +57,13 @@ def init_db(seed_if_empty: bool = True):
         fecha_registro TEXT NOT NULL,
         observacion TEXT NOT NULL,
         usuario TEXT DEFAULT 'Analista de Entorno',
+        rol TEXT DEFAULT 'Usuario',
         cambio_estado TEXT,
         FOREIGN KEY (factor_id) REFERENCES factores (id) ON DELETE CASCADE
     )
     """)
 
-    # Tabla de recomendaciones estratégicas
+    # Tabla de recomendaciones estratégicas (con autor y rol RF-10)
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS recomendaciones (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -75,11 +76,33 @@ def init_db(seed_if_empty: bool = True):
         area_responsable TEXT NOT NULL,
         plazo TEXT NOT NULL,
         estado TEXT DEFAULT 'Planificada',
+        autor_rol TEXT DEFAULT 'Decisor',
+        autor_nombre TEXT DEFAULT 'Comité de Dirección',
         FOREIGN KEY (factor_id) REFERENCES factores (id) ON DELETE CASCADE
     )
     """)
 
+    # Migraciones seguras para bases de datos existentes
+    try:
+        cursor.execute("ALTER TABLE historial_seguimiento ADD COLUMN rol TEXT DEFAULT 'Usuario'")
+    except Exception:
+        pass
+
+    try:
+        cursor.execute("ALTER TABLE recomendaciones ADD COLUMN autor_rol TEXT DEFAULT 'Decisor'")
+    except Exception:
+        pass
+
+    try:
+        cursor.execute("ALTER TABLE recomendaciones ADD COLUMN autor_nombre TEXT DEFAULT 'Comité de Dirección'")
+    except Exception:
+        pass
+
     conn.commit()
+
+    # Inicializar tabla de usuarios y autenticación con roles (RF-10)
+    import auth
+    auth.init_users_table(conn)
 
     if seed_if_empty:
         cursor.execute("SELECT COUNT(*) FROM factores")
@@ -635,15 +658,16 @@ def add_factor(data: Dict[str, Any]) -> int:
     ))
     factor_id = cursor.lastrowid
 
-    # Registrar en historial
+    # Registrar en historial con rol RF-10
     cursor.execute("""
-    INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, cambio_estado)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, rol, cambio_estado)
+    VALUES (?, ?, ?, ?, ?, ?)
     """, (
         factor_id,
         datetime.now().strftime("%Y-%m-%d %H:%M"),
         f"Creación del factor '{data['titulo']}' por lectura del entorno.",
-        data.get("usuario_registra", "Analista de Entorno"),
+        data.get("usuario_registra", "Ing. Sofía Ramírez"),
+        data.get("rol_registra", "Diseñador"),
         f"Estado: {data.get('estado', 'En Monitoreo')}"
     ))
 
@@ -651,7 +675,7 @@ def add_factor(data: Dict[str, Any]) -> int:
     conn.close()
     return factor_id
 
-def update_factor(factor_id: int, data: Dict[str, Any], observacion: str = "", usuario: str = "Analista de Entorno"):
+def update_factor(factor_id: int, data: Dict[str, Any], observacion: str = "", usuario: str = "Analista de Entorno", rol: str = "Diseñador"):
     """Actualiza los datos de un factor y añade la bitácora de seguimiento."""
     conn = get_connection()
     cursor = conn.cursor()
@@ -679,13 +703,14 @@ def update_factor(factor_id: int, data: Dict[str, Any], observacion: str = "", u
     # Añadir registro de historial
     nota = observacion if observacion else f"Actualización de parámetros del factor (Prob: {data['probabilidad']}, Imp: {data['impacto']})."
     cursor.execute("""
-    INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, cambio_estado)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, rol, cambio_estado)
+    VALUES (?, ?, ?, ?, ?, ?)
     """, (
         factor_id,
         datetime.now().strftime("%Y-%m-%d %H:%M"),
         nota,
         usuario,
+        rol,
         f"Nuevo estado: {data['estado']}"
     ))
 
@@ -715,15 +740,15 @@ def get_factor_history(factor_id: int) -> List[Dict[str, Any]]:
     conn.close()
     return [dict(r) for r in rows]
 
-def add_history_entry(factor_id: int, observacion: str, usuario: str = "Analista de Entorno", cambio_estado: str = ""):
-    """Registra una nueva observación o seguimiento."""
+def add_history_entry(factor_id: int, observacion: str, usuario: str = "Analista de Entorno", cambio_estado: str = "", rol: str = "Usuario"):
+    """Registra una nueva observación o seguimiento con rol RF-10."""
     conn = get_connection()
     cursor = conn.cursor()
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     cursor.execute("""
-    INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, cambio_estado)
-    VALUES (?, ?, ?, ?, ?)
-    """, (factor_id, now_str, observacion, usuario, cambio_estado))
+    INSERT INTO historial_seguimiento (factor_id, fecha_registro, observacion, usuario, rol, cambio_estado)
+    VALUES (?, ?, ?, ?, ?, ?)
+    """, (factor_id, now_str, observacion, usuario, rol, cambio_estado))
 
     if cambio_estado and cambio_estado != "Sin cambio":
         cursor.execute("UPDATE factores SET estado = ?, updated_at = ? WHERE id = ?", (cambio_estado, now_str, factor_id))
@@ -763,12 +788,15 @@ def add_recommendation(data: Dict[str, Any]) -> int:
     cursor.execute("""
     INSERT INTO recomendaciones (
         factor_id, codigo_recomendacion, titulo, accion_sugerida,
-        evidencia, prioridad, area_responsable, plazo, estado
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        evidencia, prioridad, area_responsable, plazo, estado,
+        autor_rol, autor_nombre
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         data["factor_id"], codigo_rec, data["titulo"], data["accion_sugerida"],
         data["evidencia"], data["prioridad"], data["area_responsable"],
-        data["plazo"], data.get("estado", "Planificada")
+        data["plazo"], data.get("estado", "Planificada"),
+        data.get("autor_rol", "Decisor"),
+        data.get("autor_nombre", "Dr. Carlos Mendoza")
     ))
     rec_id = cursor.lastrowid
     conn.commit()

@@ -6,6 +6,7 @@ Estilizado bajo la especificación "clinical blueprint on frosted paper".
 import streamlit as st
 import pandas as pd
 import database
+import models
 from utils.visualizer import create_radar_chart, create_urgency_donut, create_pestel_bar_chart
 from models import PESTEL_META, get_criticidad_label
 
@@ -19,6 +20,7 @@ def render():
                     <span class="badge-pill-solid">PESTEL</span>
                     <span class="badge-pill-soft">Smurfit WestRock Colombia</span>
                     <span class="badge-pill-outline">Planta Yumbo · Valle del Cauca</span>
+                    <span class="badge-pill-soft">RF-10: Roles Activos</span>
                 </div>
                 <h1 style="margin: 4px 0 6px 0; font-size: 32px; font-weight: 600; letter-spacing: -0.9px; color: #0a0a0a;">
                     Lectura del Entorno Estratégico
@@ -191,6 +193,80 @@ def render():
     bar_fig = create_pestel_bar_chart(df_factores)
     st.plotly_chart(bar_fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
+
+    # Requisito Funcional RF-10: Roles y Gobernanza
+    curr_role = st.session_state.get("current_role", models.UserRole.DECISOR.value)
+    st.markdown('''
+    <div class="blueprint-card" style="margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div>
+                <span class="badge-pill-solid">RF-10</span>
+                <span style="font-size: 16px; font-weight: 600; color: #0a0a0a; margin-left: 8px;">
+                    Control de Acceso y Modelo de Roles (Usuarios, Decisores, Diseñadores)
+                </span>
+            </div>
+            <span class="badge-pill-outline">Gobernanza Estratégica</span>
+        </div>
+        <p style="font-size: 13px; color: #737373; margin: 0 0 16px 0;">
+            El sistema implementa separación de responsabilidades para garantizar la rigurosidad fáctica de los factores y la trazabilidad de las decisiones gerenciales en Smurfit WestRock Colombia.
+        </p>
+    ''', unsafe_allow_html=True)
+
+    r_col1, r_col2, r_col3 = st.columns(3)
+
+    with r_col1:
+        is_dis = curr_role == models.UserRole.DISENADOR.value
+        pill_dis = "badge-pill-solid" if is_dis else "badge-pill-soft"
+        state_dis = "<b>● SESIÓN ACTIVA</b>" if is_dis else "Disponible en panel"
+        st.markdown(f'''
+        <div style="background: {'#fafafa' if is_dis else '#ffffff'}; border: 1px solid {'#0a0a0a' if is_dis else '#e5e5e5'}; border-radius: 18px; padding: 14px 16px; height: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span class="{pill_dis}">Diseñador</span>
+                <span style="font-size: 11px; color: {'#0a0a0a' if is_dis else '#737373'};">{state_dis}</span>
+            </div>
+            <div style="font-weight: 600; font-size: 13.5px; color: #0a0a0a; margin-bottom: 4px;">Arquitectura & Parametrización</div>
+            <p style="font-size: 12.5px; color: #737373; margin: 0; line-height: 1.4;">
+                Modela factores del entorno, calibra probabilidad (1-5) e impacto (1-5), verifica fuentes oficiales y gestiona datos semilla.
+            </p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    with r_col2:
+        is_dec = curr_role == models.UserRole.DECISOR.value
+        pill_dec = "badge-pill-solid" if is_dec else "badge-pill-soft"
+        state_dec = "<b>● SESIÓN ACTIVA</b>" if is_dec else "Disponible en panel"
+        st.markdown(f'''
+        <div style="background: {'#fafafa' if is_dec else '#ffffff'}; border: 1px solid {'#0a0a0a' if is_dec else '#e5e5e5'}; border-radius: 18px; padding: 14px 16px; height: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span class="{pill_dec}">Decisor</span>
+                <span style="font-size: 11px; color: {'#0a0a0a' if is_dec else '#737373'};">{state_dec}</span>
+            </div>
+            <div style="font-weight: 600; font-size: 13.5px; color: #0a0a0a; margin-bottom: 4px;">Gobernanza & Toma de Decisiones</div>
+            <p style="font-size: 12.5px; color: #737373; margin: 0; line-height: 1.4;">
+                Formula planes de acción, aprueba recomendaciones, asigna áreas operativas y actualiza el estado de factores críticos.
+            </p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    with r_col3:
+        is_usr = curr_role == models.UserRole.USUARIO.value
+        pill_usr = "badge-pill-solid" if is_usr else "badge-pill-soft"
+        state_usr = "<b>● SESIÓN ACTIVA</b>" if is_usr else "Disponible en panel"
+        st.markdown(f'''
+        <div style="background: {'#fafafa' if is_usr else '#ffffff'}; border: 1px solid {'#0a0a0a' if is_usr else '#e5e5e5'}; border-radius: 18px; padding: 14px 16px; height: 100%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span class="{pill_usr}">Usuario</span>
+                <span style="font-size: 11px; color: {'#0a0a0a' if is_usr else '#737373'};">{state_usr}</span>
+            </div>
+            <div style="font-weight: 600; font-size: 13.5px; color: #0a0a0a; margin-bottom: 4px;">Consulta & Auditoría Operativa</div>
+            <p style="font-size: 12.5px; color: #737373; margin: 0; line-height: 1.4;">
+                Consulta radares PESTEL, matrices de riesgo, exporta informes y registra novedades observadas en la bitácora de seguimiento.
+            </p>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
     # Contexto Corporativo en Expander Limpio
     with st.expander("Información Corporativa · Smurfit WestRock Colombia (Yumbo)"):

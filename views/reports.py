@@ -17,8 +17,8 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-09</span>
-                    <span class="badge-pill-soft">Documentación Ejecutiva</span>
+                    <span class="badge-pill-solid">RF-09 & RF-10</span>
+                    <span class="badge-pill-soft">Documentación & Roles</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
                     Generador de Informes Estratégicos
@@ -60,13 +60,18 @@ def render():
         df_rep_factores = df_rep_factores[df_rep_factores["tipo"] == "Oportunidad"]
 
     # Centro de descarga en tarjeta Paper (#ffffff)
-    st.markdown("""
+    curr_role = st.session_state.get("current_role", "Usuario")
+    curr_user = st.session_state.get("current_user_name", "Usuario")
+    st.markdown(f"""
     <div class="blueprint-card" style="margin: 16px 0 24px 0;">
-        <div style="font-size: 15px; font-weight: 600; color: #0a0a0a; margin-bottom: 6px; letter-spacing: -0.3px;">
-            Exportación de Documentos Formales
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 15px; font-weight: 600; color: #0a0a0a; letter-spacing: -0.3px;">
+                Exportación de Documentos Formales
+            </span>
+            <span class="badge-pill-soft">Emisor: {curr_role}</span>
         </div>
         <p style="font-size: 13px; color: #737373; margin: 0 0 16px 0;">
-            Descargue el informe consolidado con membrete corporativo para presentación a la Junta Directiva o docentes.
+            Informe oficial con membrete corporativo de Smurfit WestRock Colombia. Preparado para: <b>{curr_user}</b>.
         </p>
     """, unsafe_allow_html=True)
 

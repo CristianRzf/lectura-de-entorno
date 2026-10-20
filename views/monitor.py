@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import database
+import models
 from models import PESTELCategory, FactorType, UrgencyLevel, FactorStatus, PESTEL_META
 from utils.external_sources import get_official_sources, get_preconfigured_signals
 
@@ -16,8 +17,8 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-01 & RF-03</span>
-                    <span class="badge-pill-soft">Trazabilidad de Fuentes</span>
+                    <span class="badge-pill-solid">RF-01, RF-03 & RF-10</span>
+                    <span class="badge-pill-soft">Captura & Roles</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
                     Monitor del Entorno
@@ -46,6 +47,25 @@ def render():
     # TAB 1: FORMULARIO DE REGISTRO
     # =========================================================================
     with tab_registro:
+        curr_role = st.session_state.get("current_role", "Usuario")
+        can_create = models.check_permission(curr_role, "create_factor")
+        role_badge, pill_cls = models.get_role_badge(curr_role)
+
+        if not can_create:
+            st.markdown(f'''
+            <div class="blueprint-card" style="margin-bottom: 16px; border-left: 3px solid #171717;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Acceso Restringido en Modo Captura (RF-10)</span>
+                    <span class="{pill_cls}">{role_badge}</span>
+                </div>
+                <p style="font-size: 13px; color: #737373; margin: 0; line-height: 1.45;">
+                    El modelado, parametrización y registro de nuevos factores macroambientales está reservado para el rol de <b>Diseñador</b>.
+                    Con su rol activo (<b>{curr_role}</b>), puede explorar el catálogo de fuentes oficiales y el histórico de trazabilidad.
+                    Para ingresar nuevos factores, seleccione el rol <b>Diseñador</b> en el panel lateral.
+                </p>
+            </div>
+            ''', unsafe_allow_html=True)
+
         prefill = st.session_state.prefill_data or {}
         if prefill:
             st.info(f"Señal precargada: **{prefill.get('titulo', '')}**")
@@ -140,9 +160,18 @@ def render():
                 height=80
             )
 
-            usuario_registra = st.text_input("Analista de Entorno", value="Analista PESTEL Senior")
+            default_user = st.session_state.get("current_user_name", "Ing. Sofía Ramírez")
+            usuario_registra = st.text_input(
+                "Analista de Entorno Responsable",
+                value=f"{default_user} ({curr_role})",
+                disabled=not can_create
+            )
 
-            submitted = st.form_submit_button("Guardar Factor en Base de Datos", use_container_width=True)
+            if can_create:
+                submitted = st.form_submit_button("Guardar Factor en Base de Datos", use_container_width=True)
+            else:
+                submitted = st.form_submit_button("Guardar Factor en Base de Datos", use_container_width=True, disabled=True)
+                st.caption("🔒 *Función restringida: se requiere el rol Diseñador para guardar factores.*")
 
             if submitted:
                 if not titulo.strip():
@@ -172,7 +201,8 @@ def render():
                         "fecha_publicacion": fecha_pub.strftime("%Y-%m-%d"),
                         "fecha_consulta": fecha_con.strftime("%Y-%m-%d"),
                         "estado": estado,
-                        "usuario_registra": usuario_registra.strip()
+                        "usuario_registra": usuario_registra.strip(),
+                        "rol_registra": curr_role
                     }
                     factor_id = database.add_factor(data)
                     st.success(f"Factor guardado correctamente (ID: {factor_id}). Clasificado en {categoria_pestel}.")
@@ -234,10 +264,13 @@ def render():
                 </div>
                 """, unsafe_allow_html=True)
             with c_act:
-                if st.button("Cargar", key=f"btn_sig_{idx}", use_container_width=True):
-                    st.session_state.prefill_data = sig
-                    st.success("Señal cargada. Ve a 'Registro de Nuevo Factor'.")
-                    st.rerun()
+                if can_create:
+                    if st.button("Cargar", key=f"btn_sig_{idx}", use_container_width=True):
+                        st.session_state.prefill_data = sig
+                        st.success("Señal cargada. Ve a 'Registro de Nuevo Factor'.")
+                        st.rerun()
+                else:
+                    st.button("Cargar", key=f"btn_sig_{idx}", use_container_width=True, disabled=True, help="Solo Diseñadores pueden precargar señales.")
 
     # =========================================================================
     # TAB 3: REGISTRO HISTÓRICO & TRAZABILIDAD

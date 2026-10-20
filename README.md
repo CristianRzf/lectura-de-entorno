@@ -42,6 +42,109 @@ El sistema analiza de forma estructurada las seis dimensiones del macroentorno:
 | **RF-07. Apoyo a la toma de decisiones** | Recomendaciones vinculadas a factores evaluados, evidencia, prioridad y plan de acción. | Módulo de **Recomendaciones** vinculado a factores, con áreas responsables y control de estado. |
 | **RF-08. Seguimiento y actualización** | Registrar nuevas observaciones, editar factores y consultar bitácora histórica. | Módulo de **Seguimiento Histórico** con timeline de novedades y formulario de reevaluación. |
 | **RF-09. Generación de informes** | Generar informes ejecutivos que resuman cambios, impactos, riesgos y recomendaciones. | Generador dinámico descargable en **PDF formal (ReportLab)** y **Excel (.xlsx, openpyxl)**. |
+| **RF-10. Gestión de Roles y Permisos** | Control de acceso basado en roles dentro del aplicativo: Roles (**Usuarios**, **Decisores**, **Diseñadores**) con responsabilidades y permisos diferenciados. | Selector de rol y perfil activo en panel lateral, control de acceso granular (RBAC) en formularios de captura, gobernanza de decisiones, calibración técnica y auditoría. |
+
+---
+
+## 👥 Modelo de Roles y Control de Acceso (RF-10)
+
+El aplicativo implementa un modelo de **Control de Acceso Basado en Roles (RBAC)** con tres perfiles funcionales, garantizando la rigurosidad fáctica del análisis y la gobernanza directiva en **Smurfit WestRock Colombia (Planta Yumbo)**:
+
+### 1. 🎨 Diseñadores (Modelado & Arquitectura PESTEL)
+- **Propósito:** Modelado del macroentorno, parametrización metodológica y calibración técnica del sistema.
+- **Responsabilidades:**
+  - Registro y captura de nuevos factores del entorno nacional, internacional y del Valle del Cauca (RF-01).
+  - Calibración cuantitativa de variables metodológicas: Probabilidad (1 - 5), Impacto (1 - 5), Nivel de Urgencia y cálculo de severidad ($P \times I$) (RF-04).
+  - Verificación y trazabilidad de fuentes oficiales públicas autorizadas (MADS, CVC, ANDI, MinAgricultura) (RF-03).
+  - Precarga de señales asistidas y edición estructural completa de fichas técnicas de factores (RF-08).
+  - Operaciones administrativas y restablecimiento de la base de datos a los valores semilla iniciales.
+- **Perfil de referencia en el aplicativo:** `Ing. Sofía Ramírez` *(Especialista en Inteligencia Competitiva & PESTEL)*.
+
+### 2. 👔 Decisores (Gobernanza & Toma de Decisiones Estratégicas)
+- **Propósito:** Liderazgo directivo, priorización de inversiones y toma de decisiones corporativas para la planta de molinos y corrugadoras de Yumbo.
+- **Responsabilidades:**
+  - Formulación, aprobación y actualización de recomendaciones estratégicas vinculadas a la evidencia fáctica (RF-07).
+  - Asignación de áreas responsables de ejecución (*Operaciones & Molinos*, *Cadena de Suministro*, *División Forestal*, *Sostenibilidad*, *Jurídico*).
+  - Gobernanza del plan de acción: transición y aprobación de estados (*Planificada*, *En Ejecución*, *Completada*).
+  - Redefinición del estado estratégico de factores críticos (*Activo / Crítico*, *En Mitigación / Acción*, *Mitigado / Capitalizado*, *Cerrado*).
+  - Generación y exportación de informes ejecutivos en PDF y Excel para la Junta Directiva (RF-09).
+- **Perfil de referencia en el aplicativo:** `Dr. Carlos Mendoza` *(Director General de Operaciones & Estrategia Yumbo)*.
+
+### 3. 👥 Usuarios (Consulta General & Auditoría Operativa)
+- **Propósito:** Consulta diagnóstica, vigilancia situacional, análisis estratégico de planta y auditoría del entorno.
+- **Responsabilidades:**
+  - Acceso irrestricto de consulta y visualización a los tableros ejecutivos, Radar PESTEL de 6 dimensiones (RF-02, RF-06) y Matriz de Riesgos y Oportunidades 5x5 (RF-04, RF-05).
+  - Exploración del directorio de fuentes oficiales autorizadas y enlaces de verificación fáctica (RF-03).
+  - Registro de novedades de campo u observaciones preliminares en la bitácora histórica de seguimiento (RF-08), quedando identificados con su rol.
+  - Generación y descarga de informes de análisis estratégico en formatos PDF y Excel (RF-09).
+  - Modo de solo lectura seguro: no pueden modificar la calibración técnica de factores ni alterar unilateralmente las decisiones aprobadas.
+- **Perfil de referencia en el aplicativo:** `Laura Gómez` *(Analista de Monitoreo & Operaciones de Planta)*.
+
+---
+
+### 🛡️ Matriz de Control de Acceso (RBAC)
+
+| Capacidad / Operación en el Sistema | Requisito Relacionado | Usuario (Consulta) | Decisor (Estrategia) | Diseñador (Modelado) |
+|---|:---:|:---:|:---:|:---:|
+| Visualización de Tableros Ejecutivos y KPIs | RF-06 | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| Radar PESTEL de 6 Dimensiones | RF-02, RF-06 | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| Matriz 5x5 de Riesgos y Oportunidades | RF-04, RF-05 | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| Directorio y Trazabilidad de Fuentes Documentales | RF-03 | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| Descarga de Informes Formales (PDF y Excel) | RF-09 | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| Registro de Observaciones en Bitácora Histórica | RF-08 | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| Captura y Registro de Nuevos Factores del Entorno | RF-01 | 🔒 Solo Lectura | 🔒 Solo Lectura | ✅ Permitido |
+| Precarga de Señales Oficiales Asistidas | RF-01, RF-03 | 🔒 Solo Lectura | 🔒 Solo Lectura | ✅ Permitido |
+| Calibración de Probabilidad (1-5) e Impacto (1-5) | RF-04 | 🔒 Solo Lectura | 🔒 Preservado | ✅ Permitido |
+| Edición Estructural de Factores y Fichas Técnicas | RF-08 | 🔒 Solo Lectura | 🔒 Preservado | ✅ Permitido |
+| Formulación de Recomendaciones Estratégicas | RF-07 | 🔒 Solo Lectura | ✅ Permitido | ✅ Sugerencias |
+| Aprobación y Cambio de Estado en Planes de Acción | RF-07 | 🔒 Solo Lectura | ✅ Permitido | 🔒 Restringido |
+| Cambio de Estado Estratégico de Factores Críticos | RF-08 | 🔒 Solo Lectura | ✅ Permitido | ✅ Permitido |
+| Restablecimiento de Base de Datos Semilla | Admin | 🔒 Restringido | 🔒 Restringido | ✅ Permitido |
+
+---
+
+### 🔐 Seguridad Básica y Protección de Acceso
+
+1. **Hashing Criptográfico de Contraseñas (PBKDF2-HMAC-SHA256):**
+   - Las contraseñas nunca se almacenan en texto plano.
+   - Se utiliza la función de derivación de claves `PBKDF2-HMAC-SHA256` con **100.000 iteraciones** y una sal criptográfica única e irrepetible de 16 bytes generada con `secrets.token_bytes(16)`.
+   - La verificación se realiza en tiempo constante mediante `secrets.compare_digest()` para mitigar vulnerabilidades de canal lateral (*timing attacks*).
+
+2. **Límite de Inicios de Sesión y Bloqueo Temporal (Fuerza Bruta):**
+   - El sistema registra los intentos fallidos en la columna `intentos_fallidos`.
+   - Si un usuario ingresa una contraseña incorrecta **5 veces consecutivas**, la cuenta queda bloqueada automáticamente durante **5 minutos** mediante la marca temporal `bloqueado_hasta`.
+   - Tras el bloqueo, cualquier intento posterior informa los minutos restantes antes de permitir reintentos.
+   - Al autenticarse correctamente, el contador de fallos se restablece a cero y se actualiza `ultimo_acceso`.
+
+3. **Navegación Dinámica y Barrera de Autenticación:**
+   - La aplicación bloquea el acceso a todas las pantallas internas mediante un *gatekeeper* que intercepta peticiones no autenticadas, presentando únicamente el formulario de inicio de sesión seguro.
+   - El árbol de navegación de Streamlit se adapta dinámicamente al rol autenticado: un `Usuario` no tiene en su menú el módulo de captura de factores ni la formulación de decisiones.
+
+4. **Credenciales Institucionales Preconfiguradas (Prototipo):**
+
+| Rol | Correo Corporativo | Contraseña de Prueba | Usuario / Cargo |
+|---|---|---|---|
+| **🎨 Diseñador** | `disenador@smurfitwestrock.com` | `Disenador2026*` | Ing. Sofía Ramírez *(Inteligencia & PESTEL)* |
+| **👔 Decisor** | `decisor@smurfitwestrock.com` | `Decisor2026*` | Dr. Carlos Mendoza *(Gerente de Operaciones Yumbo)* |
+| **👥 Usuario** | `usuario@smurfitwestrock.com` | `Usuario2026*` | Laura Gómez *(Monitoreo Operativo de Planta)* |
+
+---
+
+### ☁️ Escalabilidad y Migración a Supabase (PostgreSQL)
+
+La estructura de datos en SQLite fue diseñada con tipos y restricciones estandarizadas para permitir una migración fluida a **Supabase (PostgreSQL)** cuando el proyecto escale a la nube:
+
+1. **Script de Migración SQL Incluido:**
+   - El archivo [`supabase_migration.sql`](file:///c:/herramienta%20ti/lectura-de-entorno/supabase_migration.sql) contiene el esquema completo en sintaxis estándar de PostgreSQL con llaves foráneas, índices, disparadores para `updated_at` y datos semilla.
+
+2. **Row Level Security (RLS) en Supabase:**
+   - En Supabase se habilitan políticas RLS que replican las reglas del prototipo a nivel de motor de base de datos:
+     - `factores`: Lectura pública/autenticada, pero `INSERT`, `UPDATE` y `DELETE` restringidos exclusivamente a tokens JWT con rol `Diseñador`.
+     - `recomendaciones`: Lectura general, creación habilitada para `Decisor` y `Diseñador`, y cambio de estado restringido a `Decisor`.
+     - `historial_seguimiento`: Inserción auditada para todos los usuarios autenticados.
+
+3. **Conexión Directa desde Streamlit:**
+   - Para conectar la aplicación a Supabase al escalar, basta con configurar `st.secrets["supabase_url"]` y `st.secrets["supabase_key"]` o la cadena de conexión estándar de PostgreSQL (`postgresql://postgres:[PASSWORD]@db.[PROJECT_ID].supabase.co:5432/postgres`) sustituyendo las llamadas SQLite en `database.py`.
 
 ---
 
@@ -49,9 +152,11 @@ El sistema analiza de forma estructurada las seis dimensiones del macroentorno:
 
 ```
 c:\lectura-de-entorno\
-├── app.py                      # Punto de entrada principal con st.navigation y diseño corporativo
+├── app.py                      # Punto de entrada con gatekeeper de autenticación y navegación por rol
+├── auth.py                     # Módulo de seguridad: PBKDF2 hashing, intentos fallidos y bloqueo
 ├── database.py                 # Gestión SQLite: esquemas, migraciones, seed data y consultas
-├── models.py                   # Enums PESTEL, escalas de severidad y fórmulas de cálculo
+├── models.py                   # Enums PESTEL, escalas de severidad, roles (RF-10) y permisos
+├── supabase_migration.sql      # Script de migración DDL + Row Level Security (RLS) para Supabase
 ├── requirements.txt           # Dependencias del proyecto
 ├── README.md                  # Documentación integral
 ├── utils/
@@ -59,6 +164,7 @@ c:\lectura-de-entorno\
 │   ├── report_generator.py    # Generación de reportes ejecutivos en PDF y Excel
 │   └── external_sources.py    # Directorio de fuentes autorizadas y señales asistidas
 └── views/
+    ├── login.py               # Inicio de sesión con PBKDF2, bloqueo temporal y accesos rápidos
     ├── home.py                # Inicio Ejecutivo: KPIs, radar, alertas críticas y resumen
     ├── monitor.py             # Monitor del Entorno: Captura (RF-01) y Trazabilidad (RF-03)
     ├── pestel_analysis.py     # Análisis PESTEL: Fichas técnicas y tabs por dimensión (RF-02, RF-06)

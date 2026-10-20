@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 import textwrap
 import database
+import models
 
 def render():
     st.markdown("""
@@ -14,8 +15,8 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-07</span>
-                    <span class="badge-pill-soft">Apoyo a la Toma de Decisiones</span>
+                    <span class="badge-pill-solid">RF-07 & RF-10</span>
+                    <span class="badge-pill-soft">Decisiones & Gobernanza</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
                     Recomendaciones Estratégicas
@@ -30,6 +31,11 @@ def render():
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    curr_role = st.session_state.get("current_role", "Usuario")
+    can_manage_status = models.check_permission(curr_role, "manage_recommendation_status")
+    can_create_rec = models.check_permission(curr_role, "create_recommendation")
+    role_badge, pill_cls = models.get_role_badge(curr_role)
 
     df_rec = database.get_all_recommendaciones()
     df_factores = database.get_all_factors()
@@ -101,23 +107,34 @@ def render():
 <div style="font-size: 13px; color: #737373; margin-bottom: 12px;"><b>Evidencia Fáctica Utilizada:</b> {r['evidencia']}</div>
 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-size: 12px; color: #737373; border-top: 1px solid #e5e5e5; padding-top: 10px;">
 <div>Área: <b style="color: #0a0a0a;">{r['area_responsable']}</b> &nbsp;|&nbsp; Plazo: <b style="color: #0a0a0a;">{r['plazo']}</b></div>
+<div><span style="font-size: 11.5px; color: #737373;">Autor: <b>{r.get('autor_nombre', 'Comité Directivo')}</b> ({r.get('autor_rol', 'Decisor')})</span></div>
 </div>
 </div>""")
                 st.markdown(card_html, unsafe_allow_html=True)
 
                 col_st1, col_st2 = st.columns([3, 1])
                 with col_st2:
-                    nuevo_estado = st.selectbox(
-                        f"Estado {r['codigo_recomendacion']}",
-                        ["Planificada", "En Ejecución", "Completada"],
-                        index=["Planificada", "En Ejecución", "Completada"].index(r["estado"]),
-                        key=f"rec_status_{r['id']}",
-                        label_visibility="collapsed"
-                    )
-                    if nuevo_estado != r["estado"]:
-                        database.update_recommendation_status(r["id"], nuevo_estado)
-                        st.toast(f"Estado actualizado a {nuevo_estado}")
-                        st.rerun()
+                    if can_manage_status:
+                        nuevo_estado = st.selectbox(
+                            f"Estado {r['codigo_recomendacion']}",
+                            ["Planificada", "En Ejecución", "Completada"],
+                            index=["Planificada", "En Ejecución", "Completada"].index(r["estado"]),
+                            key=f"rec_status_{r['id']}",
+                            label_visibility="collapsed"
+                        )
+                        if nuevo_estado != r["estado"]:
+                            database.update_recommendation_status(r["id"], nuevo_estado)
+                            st.toast(f"Estado actualizado a {nuevo_estado}")
+                            st.rerun()
+                    else:
+                        st.selectbox(
+                            f"Estado {r['codigo_recomendacion']}",
+                            [r["estado"]],
+                            key=f"rec_status_{r['id']}",
+                            disabled=True,
+                            label_visibility="collapsed"
+                        )
+                        st.caption("🔒 *Transición exclusiva para Decisores.*")
         else:
             st.info("No hay recomendaciones con los filtros activos.")
 
@@ -128,7 +145,21 @@ def render():
         st.markdown("### Formulación de Decisión Gerencial")
         st.caption("Conecte una acción recomendada a la evidencia del entorno.")
 
-        if df_factores.empty:
+        if not can_create_rec:
+            st.markdown(f'''
+            <div class="blueprint-card" style="margin-bottom: 16px; border-left: 3px solid #171717;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-size: 13.5px; font-weight: 600; color: #0a0a0a;">Acceso Restringido en Formulación Estratégica (RF-10)</span>
+                    <span class="{pill_cls}">{role_badge}</span>
+                </div>
+                <p style="font-size: 13px; color: #737373; margin: 0; line-height: 1.45;">
+                    La formulación de recomendaciones gerenciales y planes de acción está reservada para los roles de <b>Decisor</b> y <b>Diseñador</b>.
+                    Con su rol activo (<b>{curr_role}</b>), puede consultar el avance de las decisiones en la pestaña <b>Plan de Acción</b>.
+                    Para formular nuevas propuestas estratégicas, cambie a un rol directivo en el panel lateral.
+                </p>
+            </div>
+            ''', unsafe_allow_html=True)
+        elif df_factores.empty:
             st.warning("Debe registrar al menos un factor PESTEL antes de formular recomendaciones.")
         else:
             opciones_factores = {f"[{r['codigo']}] {r['titulo']} ({r['categoria_pestel']})": r['id'] for _, r in df_factores.iterrows()}
@@ -191,7 +222,9 @@ def render():
                             "prioridad": prioridad,
                             "area_responsable": area,
                             "plazo": plazo,
-                            "estado": "Planificada"
+                            "estado": "Planificada",
+                            "autor_rol": curr_role,
+                            "autor_nombre": st.session_state.get("current_user_name", "Dr. Carlos Mendoza")
                         }
                         database.add_recommendation(data_rec)
                         st.success("Recomendación registrada.")

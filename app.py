@@ -6,6 +6,8 @@ Sin emojis, con tipografía neutra y soporte íntegro para controles de navegaci
 
 import streamlit as st
 import database
+import models
+import auth
 import views.home as home_view
 import views.monitor as monitor_view
 import views.pestel_analysis as pestel_view
@@ -24,6 +26,19 @@ st.set_page_config(
 
 # Inicializar base de datos SQLite con datos semilla de Smurfit WestRock si es nueva
 database.init_db(seed_if_empty=True)
+
+# Control de Acceso y Verificación de Autenticación (RF-10)
+if not auth.is_authenticated():
+    import views.login as login_view
+    login_view.render()
+    st.stop()
+
+# Usuario autenticado en sesión
+current_user = auth.get_current_user()
+active_role = current_user["rol"]
+st.session_state.current_role = active_role
+st.session_state.current_user_name = current_user["nombre"]
+st.session_state.current_user_cargo = current_user["cargo"]
 
 # Inyección de estilos CSS - "Clinical blueprint on frosted paper"
 st.markdown("""
@@ -322,6 +337,36 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+    # ----------------- SESIÓN AUTENTICADA (RF-10) -----------------
+    st.markdown('''
+    <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; color: #737373; font-weight: 600; margin-bottom: 6px;">
+        Sesión Autenticada · RF-10
+    </div>
+    ''', unsafe_allow_html=True)
+
+    role_meta = models.ROLE_CONFIG.get(active_role, models.ROLE_CONFIG[models.UserRole.USUARIO.value])
+
+    st.markdown(f'''
+    <div style="background: #ffffff; border: 1px solid #e5e5e5; border-radius: 18px; padding: 12px 14px; margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-size: 13px; font-weight: 600; color: #0a0a0a;">{current_user['nombre']}</span>
+            <span class="{role_meta['pill_class']}">{role_meta['badge']}</span>
+        </div>
+        <div style="font-size: 11px; color: #737373; margin-bottom: 4px; line-height: 1.3;">
+            {current_user['cargo']}
+        </div>
+        <div style="font-size: 10.5px; color: #8c8c8c; font-family: monospace; margin-bottom: 8px;">
+            {current_user['email']}
+        </div>
+        <div style="font-size: 11px; color: #171717; line-height: 1.35; border-top: 1px solid #f0f0f0; padding-top: 6px;">
+            {role_meta['description']}
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    if st.button("Cerrar Sesión", key="btn_logout_sidebar", use_container_width=True):
+        auth.logout()
+
     # Indicadores rápidos del sidebar
     kpis = database.get_kpis_summary()
     st.markdown(f"""
@@ -348,20 +393,49 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-# Definición de páginas usando st.navigation SIN emojis (completamente serias y formales)
-pages = {
-    "Tablero Estratégico": [
-        st.Page(home_view.render, title="Inicio Ejecutivo", url_path="inicio", default=True),
-        st.Page(monitor_view.render, title="Monitor del Entorno", url_path="monitor"),
-        st.Page(pestel_view.render, title="Análisis PESTEL", url_path="analisis-pestel"),
-        st.Page(risk_view.render, title="Matriz de Riesgos", url_path="matriz-riesgos"),
-    ],
-    "Toma de Decisiones": [
-        st.Page(rec_view.render, title="Recomendaciones", url_path="recomendaciones"),
-        st.Page(tracking_view.render, title="Seguimiento Histórico", url_path="seguimiento-historico"),
-        st.Page(reports_view.render, title="Generador de Informes", url_path="generador-informes"),
-    ]
-}
+# Definición de páginas dinámicas según el Rol Autenticado (RF-10)
+if active_role == models.UserRole.DISENADOR.value:
+    # Rol Diseñador: Acceso completo incluyendo Captura del Entorno y Calibración
+    pages = {
+        "Tablero Estratégico": [
+            st.Page(home_view.render, title="Inicio Ejecutivo", url_path="inicio", default=True),
+            st.Page(monitor_view.render, title="Monitor del Entorno", url_path="monitor"),
+            st.Page(pestel_view.render, title="Análisis PESTEL", url_path="analisis-pestel"),
+            st.Page(risk_view.render, title="Matriz de Riesgos", url_path="matriz-riesgos"),
+        ],
+        "Toma de Decisiones": [
+            st.Page(rec_view.render, title="Recomendaciones", url_path="recomendaciones"),
+            st.Page(tracking_view.render, title="Seguimiento Histórico", url_path="seguimiento-historico"),
+            st.Page(reports_view.render, title="Generador de Informes", url_path="generador-informes"),
+        ]
+    }
+elif active_role == models.UserRole.DECISOR.value:
+    # Rol Decisor: Enfoque de alta gerencia, gobernanza de decisiones y mitigación
+    pages = {
+        "Tablero Estratégico": [
+            st.Page(home_view.render, title="Inicio Ejecutivo", url_path="inicio", default=True),
+            st.Page(pestel_view.render, title="Análisis PESTEL", url_path="analisis-pestel"),
+            st.Page(risk_view.render, title="Matriz de Riesgos", url_path="matriz-riesgos"),
+        ],
+        "Gobernanza & Decisiones": [
+            st.Page(rec_view.render, title="Recomendaciones Estratégicas", url_path="recomendaciones"),
+            st.Page(tracking_view.render, title="Seguimiento de Factores", url_path="seguimiento-historico"),
+            st.Page(reports_view.render, title="Generador de Informes", url_path="generador-informes"),
+        ]
+    }
+else:
+    # Rol Usuario: Consulta diagnóstica, análisis de matrices y bitácora de novedades
+    pages = {
+        "Tablero de Consulta": [
+            st.Page(home_view.render, title="Inicio Ejecutivo", url_path="inicio", default=True),
+            st.Page(pestel_view.render, title="Análisis PESTEL", url_path="analisis-pestel"),
+            st.Page(risk_view.render, title="Matriz de Riesgos", url_path="matriz-riesgos"),
+        ],
+        "Auditoría & Informes": [
+            st.Page(tracking_view.render, title="Bitácora de Seguimiento", url_path="seguimiento-historico"),
+            st.Page(reports_view.render, title="Descarga de Informes", url_path="generador-informes"),
+        ]
+    }
 
 nav = st.navigation(pages)
 
@@ -369,12 +443,25 @@ nav = st.navigation(pages)
 with st.sidebar:
     st.markdown("<hr style='border: none; border-top: 1px solid #e5e5e5; margin: 18px 0 12px 0;'>", unsafe_allow_html=True)
 
+    with st.expander("Matriz de Permisos (RF-10)"):
+        st.markdown('''
+        **Gobernanza de Roles:**
+        - **Diseñador:** Modelado PESTEL, registro de nuevos factores, calibración de probabilidad/impacto y reseteo de datos.
+        - **Decisor:** Formulación/aprobación de recomendaciones, planes de acción y gobernanza de estado de factores.
+        - **Usuario:** Visualización diagnóstica, consulta de trazabilidad y registro de observaciones en bitácora.
+        ''')
+
     with st.expander("Restablecer Datos Semilla"):
         st.caption("Restaura la base de datos a sus valores iniciales con los 18 factores de Smurfit WestRock Yumbo.")
-        if st.button("Restablecer Base de Datos", use_container_width=True):
-            database.reset_db_to_seed()
-            st.success("Base de datos restablecida.")
-            st.rerun()
+        can_reset = models.check_permission(st.session_state.current_role, "reset_database")
+        if can_reset:
+            if st.button("Restablecer Base de Datos", use_container_width=True):
+                database.reset_db_to_seed()
+                st.success("Base de datos restablecida.")
+                st.rerun()
+        else:
+            st.button("Restablecer Base de Datos", use_container_width=True, disabled=True, help="Operación restringida: Solo el rol Diseñador puede restablecer la base de datos.")
+            st.caption("🔒 *Acción reservada para el rol Diseñador.*")
 
     st.markdown("""
     <div style="font-size: 11px; color: #737373; line-height: 1.4; padding-top: 6px;">
