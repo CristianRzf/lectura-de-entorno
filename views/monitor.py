@@ -1,5 +1,5 @@
 """
-views/monitor.py - Monitor del Entorno: Captura (RF-01) y Trazabilidad (RF-03).
+views/monitor.py - Monitor del Entorno: Captura y Trazabilidad .
 Estilizado bajo la especificación "clinical blueprint on frosted paper".
 """
 
@@ -17,7 +17,7 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-01 & RF-03</span>
+                    <span class="badge-pill-solid"></span>
                     <span class="badge-pill-soft">Captura</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
@@ -74,7 +74,7 @@ def render():
                 st.rerun()
 
         with st.form("form_captura_entorno", clear_on_submit=False):
-            st.markdown("##### 1. Clasificación Metodológica PESTEL (RF-02)")
+            st.markdown("##### 1. Clasificación Metodológica PESTEL")
             c1, c2, c3 = st.columns([2, 1, 1])
             with c1:
                 titulo = st.text_input(
@@ -108,7 +108,7 @@ def render():
                 height=80
             )
 
-            st.markdown("##### 2. Trazabilidad de la Fuente (RF-03)")
+            st.markdown("##### 2. Trazabilidad de la Fuente")
             f1, f2 = st.columns([1.5, 2])
             with f1:
                 fuente_nombre = st.text_input(
@@ -141,7 +141,7 @@ def render():
                     value=datetime.now()
                 )
 
-            st.markdown("##### 3. Evaluación de Impacto sobre Smurfit WestRock Yumbo (RF-04)")
+            st.markdown("##### 3. Evaluación de Impacto sobre Smurfit WestRock Yumbo")
             e1, e2, e3 = st.columns(3)
             with e1:
                 probabilidad = st.slider("Probabilidad (1 a 5) *", 1, 5, int(prefill.get("probabilidad", 3)))
@@ -179,9 +179,9 @@ def render():
                 elif not descripcion.strip():
                     st.error("La descripción es obligatoria.")
                 elif not fuente_nombre.strip():
-                    st.error("El nombre de la fuente es obligatorio (RF-03).")
+                    st.error("El nombre de la fuente es obligatorio.")
                 elif not fuente_url.strip() or fuente_url.strip() == "https://":
-                    st.error("El enlace URL de verificación es obligatorio (RF-03).")
+                    st.error("El enlace URL de verificación es obligatorio.")
                 elif not efecto_empresa.strip():
                     st.error("Debe indicar el efecto concreto en la empresa.")
                 else:
@@ -300,7 +300,7 @@ def render():
                         st.markdown("**Impacto en Smurfit WestRock Yumbo:**")
                         st.markdown(f"<div style='background: #fafafa; border: 1px solid #e5e5e5; border-radius: 14px; padding: 12px; font-size: 13px; color: #0a0a0a;'>{row['efecto_empresa']}</div>", unsafe_allow_html=True)
                     with c_exp2:
-                        st.markdown("**Trazabilidad de la Fuente (RF-03):**")
+                        st.markdown("**Trazabilidad de la Fuente:**")
                         st.markdown(f"- **Fuente:** {row['fuente_nombre']}")
                         st.markdown(f"- **Enlace oficial:** [{row['fuente_url']}]({row['fuente_url']})")
                         st.markdown(f"- **Confiabilidad:** {row['fuente_confiabilidad']}")

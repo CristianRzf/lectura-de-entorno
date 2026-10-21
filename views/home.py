@@ -133,7 +133,7 @@ def render():
                 Eventos del entorno con severidad crítica (≥ 16) o clasificados con urgencia inmediata (&lt; 3 meses).
             </p>
         </div>
-        <span class="badge-pill-outline">RF-04 & RF-05</span>
+        <span class="badge-pill-outline"></span>
     </div>
     """, unsafe_allow_html=True)
 

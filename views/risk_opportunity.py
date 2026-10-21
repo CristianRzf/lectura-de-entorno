@@ -1,5 +1,5 @@
 """
-views/risk_opportunity.py - Matriz de Riesgos y Oportunidades (RF-04 y RF-05).
+views/risk_opportunity.py - Matriz de Riesgos y Oportunidades.
 Estilizado bajo la especificación "clinical blueprint on frosted paper".
 """
 
@@ -15,7 +15,7 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-04 & RF-05</span>
+                    <span class="badge-pill-solid"></span>
                     <span class="badge-pill-soft">Priorización Estratégica</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">

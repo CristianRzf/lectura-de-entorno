@@ -1,5 +1,5 @@
 """
-views/recommendations.py - Recomendaciones y Decisiones Estratégicas (RF-07).
+views/recommendations.py - Recomendaciones y Decisiones Estratégicas.
 Estilizado bajo la especificación "clinical blueprint on frosted paper".
 """
 
@@ -15,7 +15,7 @@ def render():
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                    <span class="badge-pill-solid">RF-07</span>
+                    <span class="badge-pill-solid"></span>
                     <span class="badge-pill-soft">Decisiones</span>
                 </div>
                 <h1 style="margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.75px; color: #0a0a0a;">
@@ -175,7 +175,7 @@ def render():
 
                 evidencia_default = f"Factor {factor_obj['codigo']} reportado por {factor_obj['fuente_nombre']} el {factor_obj['fecha_publicacion']}." if factor_obj else ""
                 evidencia = st.text_area(
-                    "Evidencia de Respaldo (RF-07) *",
+                    "Evidencia de Respaldo *",
                     value=evidencia_default,
                     height=70
                 )
