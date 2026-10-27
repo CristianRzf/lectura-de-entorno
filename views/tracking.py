@@ -198,7 +198,7 @@ def render():
                     ed_estado = st.selectbox("Estado Operativo / Estratégico", estado_list, index=estado_idx, disabled=not can_change_status)
 
                 ed_desc = st.text_area("Descripción", value=factor_to_edit["descripcion"], height=70, disabled=not can_edit_params)
-                ed_efecto = st.text_area("Efecto en Smurfit WestRock Yumbo", value=factor_to_edit["efecto_empresa"], height=70, disabled=not can_edit_params)
+                ed_efecto = st.text_area("Efecto en la organización", value=factor_to_edit["efecto_empresa"], height=70, disabled=not can_edit_params)
 
                 ep1, ep2, ep3 = st.columns(3)
                 with ep1:

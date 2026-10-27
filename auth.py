@@ -7,9 +7,9 @@ Incluye:
 - Protección contra ataques de fuerza bruta: límite de 5 intentos fallidos y bloqueo temporal.
 - Gestión de sesiones autenticadas en Streamlit (login, logout, perfil activo).
 - Esquema de base de datos modular y semillas iniciales para los 3 roles:
-  * Diseñador: Ing. Sofía Ramírez (disenador@smurfitwestrock.com)
-  * Decisor:   Dr. Carlos Mendoza  (decisor@smurfitwestrock.com)
-  * Usuario:   Laura Gómez         (usuario@smurfitwestrock.com)
+  * Diseñador: Ing. Sofía Ramírez (disenador@organizacion.com)
+  * Decisor:   Dr. Carlos Mendoza  (decisor@organizacion.com)
+  * Usuario:   Laura Gómez         (usuario@organizacion.com)
 """
 
 import hashlib
@@ -99,21 +99,21 @@ def seed_default_users(conn: sqlite3.Connection):
 
         default_users = [
             {
-                "email": "disenador@smurfitwestrock.com",
+                "email": "disenador@organizacion.com",
                 "nombre": "Ing. Sofía Ramírez",
                 "cargo": "Especialista en Inteligencia Competitiva & PESTEL",
                 "rol": "Diseñador",
                 "password_plain": "Disenador2026*"
             },
             {
-                "email": "decisor@smurfitwestrock.com",
+                "email": "decisor@organizacion.com",
                 "nombre": "Dr. Carlos Mendoza",
-                "cargo": "Director General de Operaciones & Estrategia Yumbo",
+                "cargo": "Director General de Estrategia",
                 "rol": "Decisor",
                 "password_plain": "Decisor2026*"
             },
             {
-                "email": "usuario@smurfitwestrock.com",
+                "email": "usuario@organizacion.com",
                 "nombre": "Laura Gómez",
                 "cargo": "Analista de Monitoreo & Operaciones de Planta",
                 "rol": "Usuario",

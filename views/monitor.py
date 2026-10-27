@@ -24,7 +24,7 @@ def render():
                     Monitor del Entorno
                 </h1>
                 <p style="margin: 4px 0 0 0; font-size: 14px; color: #737373;">
-                    Registro de factores nacionales, internacionales y del Valle del Cauca con verificación documental de procedencia.
+                    Registro de factores nacionales, internacionales y del regional con verificación documental de procedencia.
                 </p>
             </div>
             <div>
@@ -93,7 +93,7 @@ def render():
 
             c4, c5 = st.columns([1, 1])
             with c4:
-                ambito_list = ["Nacional", "Internacional", "Regional Valle del Cauca/Yumbo"]
+                ambito_list = ["Nacional", "Internacional", "Regional regional"]
                 ambito_default = prefill.get("ambito", "Nacional")
                 ambito_idx = ambito_list.index(ambito_default) if ambito_default in ambito_list else 0
                 ambito = st.selectbox("Ámbito Geográfico *", ambito_list, index=ambito_idx)
@@ -141,7 +141,7 @@ def render():
                     value=datetime.now()
                 )
 
-            st.markdown("##### 3. Evaluación de Impacto sobre Smurfit WestRock Yumbo")
+            st.markdown("##### 3. Evaluación de Impacto sobre la organización")
             e1, e2, e3 = st.columns(3)
             with e1:
                 probabilidad = st.slider("Probabilidad (1 a 5) *", 1, 5, int(prefill.get("probabilidad", 3)))
@@ -154,7 +154,7 @@ def render():
                 urgencia = st.selectbox("Urgencia Temporal *", urgencia_list, index=urg_idx)
 
             efecto_empresa = st.text_area(
-                "Efecto Potencial Concreto en Smurfit WestRock (Planta Yumbo / Forestal) *",
+                "Efecto Potencial Concreto en la organizaciónal) *",
                 value=prefill.get("efecto_empresa", ""),
                 placeholder="Impacto directo en suministro de madera, costos de energía, ventas de corrugado o cumplimiento regulatorio...",
                 height=80
@@ -285,7 +285,7 @@ def render():
         with col_f2:
             filtro_tipo = st.selectbox("Naturaleza", ["Todos", "Riesgo", "Oportunidad"], key="mon_fil_tipo")
         with col_f3:
-            busqueda = st.text_input("Buscar por término", placeholder="Ej. Yumbo, CVC, plástico, madera...", key="mon_busq")
+            busqueda = st.text_input("Buscar por término", placeholder="Ej. la organización, CVC, plástico, madera...", key="mon_busq")
 
         df = database.get_all_factors(categoria=filtro_cat, tipo=filtro_tipo, busqueda=busqueda)
         st.markdown(f"<span style='font-size: 13px; color: #737373;'>Factores registrados: <b>{len(df)}</b></span>", unsafe_allow_html=True)
@@ -297,7 +297,7 @@ def render():
                     with c_exp1:
                         st.markdown("**Descripción del Fenómeno:**")
                         st.write(row["descripcion"])
-                        st.markdown("**Impacto en Smurfit WestRock Yumbo:**")
+                        st.markdown("**Impacto en la organización:**")
                         st.markdown(f"<div style='background: #fafafa; border: 1px solid #e5e5e5; border-radius: 14px; padding: 12px; font-size: 13px; color: #0a0a0a;'>{row['efecto_empresa']}</div>", unsafe_allow_html=True)
                     with c_exp2:
                         st.markdown("**Trazabilidad de la Fuente:**")

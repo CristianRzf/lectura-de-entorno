@@ -1,5 +1,5 @@
 """
-views/home.py - Inicio Ejecutivo para Smurfit WestRock Colombia.
+views/home.py - Inicio Ejecutivo para la organización.
 Estilizado bajo la especificación "clinical blueprint on frosted paper".
 """
 
@@ -18,15 +18,15 @@ def render():
             <div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                     <span class="badge-pill-solid">PESTEL</span>
-                    <span class="badge-pill-soft">Smurfit WestRock Colombia</span>
-                    <span class="badge-pill-outline">Planta Yumbo · Valle del Cauca</span>
+                    <span class="badge-pill-soft">la organización</span>
+                    <span class="badge-pill-outline">la organización · regional</span>
                     <span class="badge-pill-soft">Roles Activos</span>
                 </div>
                 <h1 style="margin: 4px 0 6px 0; font-size: 32px; font-weight: 600; letter-spacing: -0.9px; color: #0a0a0a;">
                     Lectura del Entorno Estratégico
                 </h1>
                 <p style="margin: 0; font-size: 14px; color: #737373; line-height: 1.43;">
-                    Vigilancia macro y microsectorial sobre los molinos de papel, corrugadoras y operaciones forestales.
+                    Vigilancia macro y microsectorial del entorno estratégico organizacional.
                 </p>
             </div>
             <div style="text-align: right;">
@@ -115,7 +115,7 @@ def render():
                 <span class="badge-pill-soft">Plazos</span>
             </div>
             <p style="margin: 0 0 12px 0; font-size: 13px; color: #737373;">
-                Horizonte temporal de afectación sobre las operaciones de Yumbo.
+                Horizonte temporal de afectación sobre las operaciones de la organización.
             </p>
         """, unsafe_allow_html=True)
         donut_fig = create_urgency_donut(df_factores)
@@ -164,7 +164,7 @@ def render():
                             [{row['codigo']}] {row['titulo'][:52]}...
                         </h4>
                         <p style="font-size: 13px; color: #737373; margin: 0 0 12px 0; line-height: 1.4;">
-                            <b style="color: #171717;">Efecto Yumbo:</b> {row['efecto_empresa'][:85]}...
+                            <b style="color: #171717;">Efecto:</b> {row['efecto_empresa'][:85]}...
                         </p>
                     </div>
                     <div style="background: #fafafa; border: 1px solid #e5e5e5; border-radius: 14px; padding: 6px 10px; font-size: 12px; color: #737373; display: flex; justify-content: space-between;">
@@ -187,7 +187,7 @@ def render():
             <span class="badge-pill-outline">Riesgos vs Oportunidades</span>
         </div>
         <p style="margin: 0 0 12px 0; font-size: 13px; color: #737373;">
-            Balance de factores restrictivos y favorables para la estrategia de empaques circulares.
+            Balance de factores restrictivos y favorables para la estrategia organizacional.
         </p>
     """, unsafe_allow_html=True)
     bar_fig = create_pestel_bar_chart(df_factores)
@@ -207,7 +207,7 @@ def render():
             <span class="badge-pill-outline">Gobernanza Estratégica</span>
         </div>
         <p style="font-size: 13px; color: #737373; margin: 0 0 16px 0;">
-            El sistema implementa separación de responsabilidades para garantizar la rigurosidad fáctica de los factores y la trazabilidad de las decisiones gerenciales en Smurfit WestRock Colombia.
+            El sistema implementa separación de responsabilidades para garantizar la rigurosidad fáctica de los factores y la trazabilidad de las decisiones gerenciales en la organización.
         </p>
     ''', unsafe_allow_html=True)
 
@@ -268,10 +268,10 @@ def render():
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
     # Contexto Corporativo en Expander Limpio
-    with st.expander("Información Corporativa · Smurfit WestRock Colombia (Yumbo)"):
+    with st.expander("Información Corporativa · la organización (la organización)"):
         st.markdown("""
-        **Smurfit WestRock Colombia S.A.S.** es el principal fabricante de papel y cartón corrugado del país.
-        - **Complejo Yumbo (Valle del Cauca):** Centro neurálgico de producción de kraftliner, papeles reciclados y sacos industriales.
+        **Lectura del Entorno PESTEL** es el principal fabricante de papel y cartón corrugado del país.
+        - **Sede principal:** Centro neurálgico de producción de kraftliner, papeles reciclados y sacos industriales.
         - **División Forestal:** Manejo responsable de más de 68.000 ha forestales certificadas FSC® en el suroccidente colombiano.
         - **Economía Circular:** Reciclaje anual de más de 220.000 toneladas de fibra secundaria en coordinación con recicladores de oficio.
         """)

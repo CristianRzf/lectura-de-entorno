@@ -6,15 +6,15 @@ desde fuentes públicas oficiales, informes corporativos y medios especializados
 from typing import List, Dict, Any
 from datetime import datetime
 
-# Directorio de fuentes autorizadas y enlaces oficiales para Smurfit WestRock Colombia
+# Directorio de fuentes autorizadas y enlaces oficiales para la organización
 OFFICIAL_SOURCES_CATALOG = [
     {
         "id": "SRC-01",
-        "entidad": "Smurfit WestRock Global & Colombia",
+        "entidad": "la organización Global & Colombia",
         "tipo": "Informes Corporativos & Portal Oficial",
         "categoria_primaria": "Ecológico / Tecnológico",
-        "url": "https://www.smurfitwestrock.com/co",
-        "descripcion": "Portal corporativo, informes anuales de sostenibilidad, innovaciones en empaques biodegradables y operaciones en Yumbo."
+        "url": "https://www.organizacion.com/co",
+        "descripcion": "Portal corporativo, informes anuales de sostenibilidad, innovaciones en empaques biodegradables y operaciones en la organización."
     },
     {
         "id": "SRC-02",
@@ -26,11 +26,11 @@ OFFICIAL_SOURCES_CATALOG = [
     },
     {
         "id": "SRC-03",
-        "entidad": "CVC (Corporación Autónoma Regional del Valle del Cauca)",
+        "entidad": "CVC (Corporación Autónoma Regional del regional)",
         "tipo": "Autoridad Ambiental Regional",
         "categoria_primaria": "Ecológico / Legal",
         "url": "https://www.cvc.gov.co",
-        "descripcion": "Monitoreo del Río Cauca, permisos de captación hídrica industrial en Yumbo, calidad del aire y planes de ordenamiento de cuenca."
+        "descripcion": "Monitoreo del Río Cauca, permisos de captación hídrica industrial en la organización, calidad del aire y planes de ordenamiento de cuenca."
     },
     {
         "id": "SRC-04",
@@ -54,7 +54,7 @@ OFFICIAL_SOURCES_CATALOG = [
         "tipo": "Gremio Industrial",
         "categoria_primaria": "Político / Económico",
         "url": "https://www.andi.com.co",
-        "descripcion": "Cámara de Pulpa, Papel y Cartón, Seccional Valle del Cauca, iniciativa Visión 3030 de economía circular."
+        "descripcion": "Cámara de Pulpa, Papel y Cartón, Seccional regional, iniciativa Visión 3030 de economía circular."
     },
     {
         "id": "SRC-07",
@@ -88,13 +88,13 @@ PRECONFIGURED_SIGNALS = [
         "impacto": 4,
         "urgencia": "Alta (3 - 6 meses)",
         "descripcion": "El Ministerio fijó una meta mínima de aprovechamiento del 20% para empresas generadoras de residuos de envases y empaques en Colombia.",
-        "efecto_empresa": "Impulsa el negocio de certificación de aprovechamiento y reciclaje de cartón de Smurfit WestRock para sus clientes industriales."
+        "efecto_empresa": "Impulsa el negocio de certificación de aprovechamiento y reciclaje de cartón de la organización para sus clientes industriales."
     },
     {
         "titulo": "CVC declara alerta preventiva por niveles bajos en la cuenca del Río Cauca en el tramo Cali-Yumbo",
         "categoria_pestel": "Ecológico",
         "tipo": "Riesgo",
-        "ambito": "Regional Valle del Cauca/Yumbo",
+        "ambito": "Regional regional",
         "fuente_nombre": "CVC - Boletín Hidrológico Valle",
         "fuente_url": "https://www.cvc.gov.co/boletin-hidrologico-cuenca-cauca",
         "fecha_publicacion": "2024-09-29",
@@ -102,7 +102,7 @@ PRECONFIGURED_SIGNALS = [
         "impacto": 4,
         "urgencia": "Inmediata (< 3 meses)",
         "descripcion": "Disminución del 35% en los caudales de entrada al embalse de Salvajina y aumento de turbiedad por bajas lluvias.",
-        "efecto_empresa": "Riesgo de límites temporales a la captación de agua industrial en los molinos de pulpa de la planta Yumbo."
+        "efecto_empresa": "Riesgo de límites temporales a la captación de agua industrial en los molinos de pulpa de la la organización."
     },
     {
         "titulo": "Cámara de Comercio Electrónico reporta crecimiento del 14.5% en ventas con empaque especializado",
@@ -116,10 +116,10 @@ PRECONFIGURED_SIGNALS = [
         "impacto": 4,
         "urgencia": "Alta (3 - 6 meses)",
         "descripcion": "El comercio electrónico en Colombia exige cajas de cartón con aberturas seguras, cintas adhesivas ecológicas integradas y facilidad de retorno.",
-        "efecto_empresa": "Mayor colocación del portafolio e-Commerce de Smurfit WestRock diseñado en la planta corrugadora de Yumbo."
+        "efecto_empresa": "Mayor colocación del portafolio e-Commerce de la organización diseñado en la planta corrugadora de la organización."
     },
     {
-        "titulo": "ProColombia proyecta incremento de 22% en envíos de aguacate Hass del Valle del Cauca hacia Europa",
+        "titulo": "ProColombia proyecta incremento de 22% en envíos de aguacate Hass del regional hacia Europa",
         "categoria_pestel": "Económico",
         "tipo": "Oportunidad",
         "ambito": "Nacional",
@@ -130,7 +130,7 @@ PRECONFIGURED_SIGNALS = [
         "impacto": 5,
         "urgencia": "Inmediata (< 3 meses)",
         "descripcion": "Productores del norte del Valle y Eje Cafetero aumentan pedidos de cajas de cartón corrugado hidrorresistente para contenedores refrigerados.",
-        "efecto_empresa": "Saturación positiva de las líneas de producción de empaque agrícola en la planta Yumbo con márgenes atractivos."
+        "efecto_empresa": "Saturación positiva de las líneas de producción de empaque agrícola en la la organización con márgenes atractivos."
     },
     {
         "titulo": "Proyecto de Ley sobre incentivos tributarios a empresas que autogeneren con biomasa forestal",
@@ -144,7 +144,7 @@ PRECONFIGURED_SIGNALS = [
         "impacto": 4,
         "urgencia": "Media (6 - 12 meses)",
         "descripcion": "Debate legislativo para otorgar exenciones arancelarias a equipos de cogeneración eléctrica a partir de residuos de madera y corteza.",
-        "efecto_empresa": "Facilita la modernización de la caldera de biomasa de la planta Yumbo reduciendo costos de energía y huella de carbono."
+        "efecto_empresa": "Facilita la modernización de la caldera de biomasa de la la organización reduciendo costos de energía y huella de carbono."
     }
 ]
 

@@ -1,6 +1,6 @@
 """
 models.py - Definición de constantes, categorías PESTEL, escalas de impacto, lógica de puntuación
-y modelo de roles de usuario para Smurfit WestRock Colombia.
+y modelo de roles de usuario para la organización.
 Alineado con el sistema de diseño clínico/monocromático (Canvas, Paper, Ink, Mid Gray, Hairline, Ember).
 """
 
@@ -69,7 +69,7 @@ ROLE_CONFIG: Dict[str, Dict[str, Any]] = {
         "badge": "Modo Decisor",
         "color": "#0a0a0a",
         "pill_class": "badge-pill-solid",
-        "description": "Liderazgo directivo y toma de decisiones para Smurfit WestRock Yumbo. Formulación y aprobación de planes de acción estratégicos, asignación de áreas y transición de estados ejecutivos.",
+        "description": "Liderazgo directivo y toma de decisiones para la organización. Formulación y aprobación de planes de acción estratégicos, asignación de áreas y transición de estados ejecutivos.",
         "permissions": {
             "view_dashboards": True,
             "export_reports": True,
@@ -107,7 +107,7 @@ DEFAULT_PROFILES: List[Dict[str, Any]] = [
     {
         "id": "prof_decisor",
         "nombre": "Dr. Carlos Mendoza",
-        "cargo": "Director General de Operaciones & Estrategia Yumbo",
+        "cargo": "Director General de Estrategia",
         "rol": UserRole.DECISOR.value,
         "avatar": "CM"
     },
@@ -144,32 +144,32 @@ PESTEL_META = {
     PESTELCategory.POLITICO.value: {
         "color": "#0a0a0a",
         "code": "POL",
-        "desc": "Políticas públicas, subsidios forestales (CIF), aranceles y estabilidad institucional."
+        "desc": "Políticas públicas, marcos regulatorios sectoriales, aranceles y estabilidad institucional."
     },
     PESTELCategory.ECONOMICO.value: {
         "color": "#171717",
         "code": "ECO",
-        "desc": "Auge agroexportador, comercio electrónico, inflación, TRM y costos energéticos."
+        "desc": "Tendencias macroeconómicas, comercio exterior, inflación, tasas de cambio y costos operativos."
     },
     PESTELCategory.SOCIAL.value: {
         "color": "#171717",
         "code": "SOC",
-        "desc": "Consumo consciente libre de plásticos, diálogo comunitario forestal y talento en Yumbo."
+        "desc": "Consumo consciente libre de plásticos, diálogo comunitario forestal y talento en la organización."
     },
     PESTELCategory.TECNOLOGICO.value: {
         "color": "#0a0a0a",
         "code": "TEC",
-        "desc": "Tecnología AquaStop, gemelos digitales, automatización y sensores IoT en molinos."
+        "desc": "Innovación tecnológica, automatización, transformación digital y ciberseguridad."
     },
     PESTELCategory.ECOLOGICO.value: {
         "color": "#0a0a0a",
         "code": "ECL",
-        "desc": "Sustitución de plásticos (Ley 2232), estrés hídrico en Río Cauca y biomasa circular."
+        "desc": "Cambio climático, recursos naturales, regulaciones ambientales y economía circular."
     },
     PESTELCategory.LEGAL.value: {
         "color": "#171717",
         "code": "LEG",
-        "desc": "Metas REP (Res. 1407), normativa de vertimientos CVC e impuestos ambientales."
+        "desc": "Normativas sectoriales, cumplimiento regulatorio, estándares internacionales y litigios."
     }
 }
 

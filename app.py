@@ -1,5 +1,5 @@
 """
-app.py - Aplicación Web de Lectura del Entorno PESTEL para Smurfit WestRock Colombia.
+app.py - Aplicación Web de Lectura del Entorno PESTEL para la organización.
 Diseñada con la especificación de interfaz "clinical blueprint on frosted paper" (shadcn/ui aesthetic).
 Sin emojis, con tipografía neutra y soporte íntegro para controles de navegación y desplegables.
 """
@@ -18,13 +18,13 @@ import views.reports as reports_view
 
 # Configuración global de página (sin emojis)
 st.set_page_config(
-    page_title="Lectura del Entorno PESTEL | Smurfit WestRock Colombia",
+    page_title="Lectura del Entorno PESTEL | la organización",
     page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Inicializar base de datos SQLite con datos semilla de Smurfit WestRock si es nueva
+# Inicializar base de datos SQLite con datos semilla de la organización si es nueva
 database.init_db(seed_if_empty=True)
 
 # Control de Acceso y Verificación de Autenticación
@@ -190,6 +190,13 @@ st.markdown("""
         box-shadow: none !important;
     }
 
+    /* Force white text on all inner elements of filled buttons */
+    .stButton > button p,
+    .stButton > button span,
+    .stButton > button div {
+        color: #fafafa !important;
+    }
+
     .stButton > button:hover {
         opacity: 0.88 !important;
     }
@@ -326,13 +333,13 @@ with st.sidebar:
     st.markdown("""
     <div style="padding: 10px 0 16px 0; border-bottom: 1px solid #e5e5e5; margin-bottom: 16px;">
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-            <span class="badge-pill-solid">SW</span>
+            <span class="badge-pill-solid">LP</span>
             <span style="font-size: 14px; font-weight: 600; color: #0a0a0a; letter-spacing: -0.3px;">
-                Smurfit WestRock
+                la organización
             </span>
         </div>
         <div style="font-size: 12px; color: #737373; margin-left: 2px;">
-            Planta Industrial Yumbo · PESTEL
+            Sistema de Vigilancia Estratégica · PESTEL
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -452,7 +459,7 @@ with st.sidebar:
         ''')
 
     with st.expander("Restablecer Datos Semilla"):
-        st.caption("Restaura la base de datos a sus valores iniciales con los 18 factores de Smurfit WestRock Yumbo.")
+        st.caption("Restaura la base de datos a sus valores iniciales con los 18 factores de la organización.")
         can_reset = models.check_permission(st.session_state.current_role, "reset_database")
         if can_reset:
             if st.button("Restablecer Base de Datos", use_container_width=True):
@@ -465,8 +472,8 @@ with st.sidebar:
 
     st.markdown("""
     <div style="font-size: 11px; color: #737373; line-height: 1.4; padding-top: 6px;">
-        Smurfit WestRock Colombia<br>
-        Carrera 1 # 15-05, Yumbo, Valle
+        la organización<br>
+        
     </div>
     """, unsafe_allow_html=True)
 

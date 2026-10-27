@@ -23,7 +23,7 @@ def render():
                     Análisis y Clasificación PESTEL
                 </h1>
                 <p style="margin: 4px 0 0 0; font-size: 14px; color: #737373;">
-                    Evaluación estructurada en las seis dimensiones macroambientales que inciden sobre Smurfit WestRock Yumbo.
+                    Evaluación estructurada en las seis dimensiones macroambientales que inciden sobre la organización.
                 </p>
             </div>
             <div>
@@ -42,7 +42,7 @@ def render():
     with f_col2:
         filtro_urgencia = st.selectbox("Urgencia Temporal", ["Todas", "Inmediata (< 3 meses)", "Alta (3 - 6 meses)", "Media (6 - 12 meses)", "Baja (> 1 año)"], key="pestel_urg")
     with f_col3:
-        filtro_texto = st.text_input("Filtrar por texto o código", placeholder="Ej. Yumbo, Celulosa, Ley 2232...", key="pestel_txt")
+        filtro_texto = st.text_input("Filtrar por texto o código", placeholder="Ej. la organización, Celulosa, Ley 2232...", key="pestel_txt")
 
     df_filtrado = df_all.copy()
     if filtro_tipo != "Todos":
@@ -123,7 +123,7 @@ def render():
 <h3 style="font-size: 16px; font-weight: 600; color: #0a0a0a; margin: 0 0 8px 0; letter-spacing: -0.4px;">{row['titulo']}</h3>
 <p style="font-size: 13.5px; color: #737373; margin: 0 0 12px 0; line-height: 1.45;">{row['descripcion']}</p>
 <div style="background: #fafafa; border: 1px solid #e5e5e5; border-radius: 14px; padding: 12px 14px; margin-bottom: 12px;">
-<div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; color: #0a0a0a; margin-bottom: 3px;">Impacto Operativo en Planta Yumbo / Smurfit WestRock:</div>
+<div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; color: #0a0a0a; margin-bottom: 3px;">Impacto Operativo en la organización / la organización:</div>
 <div style="font-size: 13px; color: #171717; line-height: 1.4;">{row['efecto_empresa']}</div>
 </div>
 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-size: 12px; color: #737373; border-top: 1px solid #e5e5e5; padding-top: 10px;">

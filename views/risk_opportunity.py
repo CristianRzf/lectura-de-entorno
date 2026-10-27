@@ -22,7 +22,7 @@ def render():
                     Matriz de Riesgos y Oportunidades
                 </h1>
                 <p style="margin: 4px 0 0 0; font-size: 14px; color: #737373;">
-                    Evaluación cuantitativa y cualitativa de Probabilidad (1-5) e Impacto (1-5) para Smurfit WestRock Yumbo.
+                    Evaluación cuantitativa y cualitativa de Probabilidad (1-5) e Impacto (1-5) para la organización.
                 </p>
             </div>
             <div>
@@ -67,7 +67,7 @@ def render():
     # Guía Metodológica en Expander Limpio
     with st.expander("Metodología de Cuadrantes 5x5"):
         st.markdown("""
-        | Zona de Matriz | P x I | Naturaleza | Tratamiento Estratégico en Yumbo |
+        | Zona de Matriz | P x I | Naturaleza | Tratamiento Estratégico en la organización |
         |---|---|---|---|
         | **Zona Superior Derecha** | 17 - 25 | **Extremo / Estratégico** | Intervención prioritaria de gerencia; asignación de CAPEX y mitigación inmediata. |
         | **Zona Media Alta** | 12 - 16 | **Alto / Clave** | Plan de acción formal con responsable y fechas límite establecidas. |
@@ -105,7 +105,7 @@ def render():
                     </div>
                 </div>
                 <div style="margin: 8px 0; font-size: 13.5px; color: #171717; line-height: 1.4;">
-                    <b style="color: #0a0a0a;">Impacto en Planta Yumbo:</b> {row['efecto_empresa']}
+                    <b style="color: #0a0a0a;">Impacto en la organización:</b> {row['efecto_empresa']}
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #737373; border-top: 1px solid #e5e5e5; padding-top: 8px; margin-top: 8px;">
                     <span>Urgencia: <b style="color: #0a0a0a;">{row['urgencia']}</b> · Ponderada: <b style="color: #0a0a0a;">{row['prioridad_ponderada']}</b></span>

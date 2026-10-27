@@ -44,12 +44,12 @@ def generate_excel_report(df_factores: pd.DataFrame, df_recomendaciones: pd.Data
     ws1.views.sheetView[0].showGridLines = True
 
     ws1.merge_cells("A1:G1")
-    ws1["A1"] = "SMURFIT WESTROCK COLOMBIA — LECTURA DEL ENTORNO PESTEL"
+    ws1["A1"] = "LECTURA DEL ENTORNO PESTEL — LECTURA DEL ENTORNO PESTEL"
     ws1["A1"].font = title_font
     ws1["A1"].alignment = Alignment(vertical="center")
 
     ws1.merge_cells("A2:G2")
-    ws1["A2"] = f"Complejo Industrial Yumbo, Valle del Cauca · Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    ws1["A2"] = f"Sistema de Análisis PESTEL · Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}"
     ws1["A2"].font = subtitle_font
 
     kpis = [
@@ -100,7 +100,7 @@ def generate_excel_report(df_factores: pd.DataFrame, df_recomendaciones: pd.Data
     cols_factores = [
         "Código", "Categoría PESTEL", "Tipo", "Ámbito", "Título del Factor",
         "Probabilidad (1-5)", "Impacto (1-5)", "Severidad (1-25)", "Urgencia",
-        "Efecto en Smurfit WestRock Yumbo", "Fuente", "URL Fuente", "Fecha Publicación",
+        "Efecto en la organización", "Fuente", "URL Fuente", "Fecha Publicación",
         "Fecha Consulta", "Estado"
     ]
     ws2.append(cols_factores)
@@ -231,12 +231,12 @@ def generate_pdf_report(df_factores: pd.DataFrame, df_recomendaciones: pd.DataFr
     story = []
 
     # 1. ENCABEZADO MONOCROMÁTICO
-    story.append(Paragraph("SMURFIT WESTROCK COLOMBIA", title_style))
+    story.append(Paragraph("LECTURA DEL ENTORNO PESTEL", title_style))
     story.append(Paragraph("Informe de Lectura del Entorno Estratégico (PESTEL)", ParagraphStyle(
         'SubT', parent=styles['Heading3'], fontName='Helvetica-Bold', fontSize=11, textColor=colors.HexColor('#171717')
     )))
     fecha_hoy = datetime.now().strftime("%d de %B de %Y")
-    story.append(Paragraph(f"Complejo Industrial Yumbo (Valle del Cauca) · Emisión: {fecha_hoy} · Uso Interno", subtitle_style))
+    story.append(Paragraph(f"Sistema de Análisis PESTEL (regional) · Emisión: {fecha_hoy} · Uso Interno", subtitle_style))
     story.append(Spacer(1, 6))
     story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor('#e5e5e5'), spaceBefore=2, spaceAfter=8))
 
@@ -249,8 +249,8 @@ def generate_pdf_report(df_factores: pd.DataFrame, df_recomendaciones: pd.DataFr
     estrategicas = oportunidades[oportunidades["puntuacion_severidad"] >= 16]
 
     resumen_text = (
-        f"Consolidado de vigilancia del entorno para <b>Smurfit WestRock Colombia</b> focalizado en las operaciones "
-        f"del complejo papelero y de empaques en Yumbo y sus núcleos forestales. Se han evaluado un total de "
+        f"Consolidado de vigilancia del entorno para <b>la organización</b> focalizado en las operaciones "
+        f"del la organización y su entorno sectorial. Se han evaluado un total de "
         f"<b>{total_f} factores estratégicos</b> ({len(riesgos)} riesgos y {len(oportunidades)} oportunidades). "
         f"Se destacan <b>{len(criticos)} riesgos críticos</b> que requieren planes de contingencia (principalmente en "
         f"el corredor vial Panamericano y la cuenca del Río Cauca) y <b>{len(estrategicas)} oportunidades de alto impacto</b> "
@@ -333,7 +333,7 @@ def generate_pdf_report(df_factores: pd.DataFrame, df_recomendaciones: pd.DataFr
             Paragraph("<b>Cód</b>", table_cell_bold),
             Paragraph("<b>Tipo</b>", table_cell_bold),
             Paragraph("<b>Dimensión</b>", table_cell_bold),
-            Paragraph("<b>Título & Efecto en Yumbo</b>", table_cell_bold),
+            Paragraph("<b>Título & Efecto en la Organización</b>", table_cell_bold),
             Paragraph("<b>P x I</b>", table_cell_bold),
             Paragraph("<b>Urgencia</b>", table_cell_bold),
             Paragraph("<b>Fuente</b>", table_cell_bold)
@@ -412,7 +412,7 @@ def generate_pdf_report(df_factores: pd.DataFrame, df_recomendaciones: pd.DataFr
     story.append(Spacer(1, 12))
     story.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor('#e5e5e5'), spaceBefore=4, spaceAfter=6))
     story.append(Paragraph(
-        "Documento estratégico confidencial · Sistema de Inteligencia PESTEL · Smurfit WestRock Colombia (Yumbo)",
+        "Documento estratégico confidencial · Sistema de Inteligencia PESTEL · la organización (la organización)",
         ParagraphStyle('Footer', parent=styles['Normal'], fontSize=7.5, textColor=colors.HexColor('#737373'), alignment=1)
     ))
 

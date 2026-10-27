@@ -22,7 +22,7 @@ def render():
                     Recomendaciones Estratégicas
                 </h1>
                 <p style="margin: 4px 0 0 0; font-size: 14px; color: #737373;">
-                    Planes de acción gerenciales sustentados en la evidencia fáctica del entorno para Smurfit WestRock Yumbo.
+                    Planes de acción gerenciales sustentados en la evidencia fáctica del entorno para la organización.
                 </p>
             </div>
             <div>
@@ -101,7 +101,7 @@ def render():
 </div>
 <h3 style="font-size: 16px; font-weight: 600; color: #0a0a0a; margin: 0 0 8px 0; letter-spacing: -0.4px;">{r['titulo']}</h3>
 <div style="background: #fafafa; border: 1px solid #e5e5e5; border-radius: 14px; padding: 12px 14px; margin-bottom: 10px;">
-<div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; color: #0a0a0a; margin-bottom: 3px;">Acción Estratégica para Smurfit WestRock:</div>
+<div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; color: #0a0a0a; margin-bottom: 3px;">Acción Estratégica para la organización:</div>
 <div style="font-size: 13.5px; color: #171717; line-height: 1.45;">{r['accion_sugerida']}</div>
 </div>
 <div style="font-size: 13px; color: #737373; margin-bottom: 12px;"><b>Evidencia Fáctica Utilizada:</b> {r['evidencia']}</div>
@@ -191,7 +191,7 @@ def render():
                     prioridad = st.selectbox("Prioridad", ["Alta", "Media", "Baja"], index=0)
                 with c2:
                     area = st.selectbox("Área Responsable", [
-                        "Operaciones & Molinos Yumbo",
+                        "Operaciones & Gestión",
                         "Cadena de Suministro & Logística",
                         "División Forestal & Silvicultura",
                         "Comercial & Mercadeo de Empaques",

@@ -182,7 +182,7 @@ def create_matrix_5x5(df: pd.DataFrame, factor_type: str = "Todos") -> go.Figure
             zeroline=False
         ),
         yaxis=dict(
-            title=dict(text="Impacto en Smurfit WestRock (1 a 5)", font=dict(size=12, color="#737373")),
+            title=dict(text="Impacto en la organización (1 a 5)", font=dict(size=12, color="#737373")),
             range=[0.5, 5.5],
             tickvals=[1, 2, 3, 4, 5],
             ticktext=["1: Leve", "2: Menor", "3: Moderado", "4: Crítico", "5: Mayor"],

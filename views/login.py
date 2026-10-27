@@ -10,8 +10,8 @@ def render():
     st.markdown("""
     <div style="max-width: 680px; margin: 48px auto 32px auto; text-align: center;">
         <div style="display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-            <span class="badge-pill-solid">Smurfit WestRock</span>
-            <span class="badge-pill-soft">Planta Yumbo · Valle del Cauca</span>
+            <span class="badge-pill-solid">la organización</span>
+            <span class="badge-pill-soft">la organización · regional</span>
             <span class="badge-pill-outline">Seguridad</span>
         </div>
         <h1 style="font-size: 32px; font-weight: 600; letter-spacing: -0.9px; color: #0a0a0a; margin: 0 0 14px 0;">
@@ -47,7 +47,7 @@ def render():
             email_val = st.text_input(
                 "Correo Electrónico Corporativo *",
                 value=st.session_state.login_prefill_email,
-                placeholder="ejemplo@smurfitwestrock.com"
+                placeholder="ejemplo@organizacion.com"
             )
             pwd_val = st.text_input(
                 "Contraseña *",

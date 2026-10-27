@@ -71,7 +71,7 @@ def render():
             <span class="badge-pill-soft">Emisor: {curr_role}</span>
         </div>
         <p style="font-size: 13px; color: #737373; margin: 0 0 16px 0;">
-            Informe oficial con membrete corporativo de Smurfit WestRock Colombia. Preparado para: <b>{curr_user}</b>.
+            Informe oficial con membrete corporativo de la organización. Preparado para: <b>{curr_user}</b>.
         </p>
     """, unsafe_allow_html=True)
 
@@ -81,7 +81,7 @@ def render():
         st.download_button(
             label="Descargar Informe en PDF",
             data=pdf_bytes,
-            file_name=f"Informe_PESTEL_Smurfit_WestRock_{datetime.now().strftime('%Y%m%d')}.pdf",
+            file_name=f"Informe_PESTEL_{datetime.now().strftime('%Y%m%d')}.pdf",
             mime="application/pdf",
             use_container_width=True
         )
@@ -91,7 +91,7 @@ def render():
         st.download_button(
             label="Descargar Matriz en Excel (.xlsx)",
             data=excel_bytes,
-            file_name=f"Matriz_PESTEL_Smurfit_WestRock_{datetime.now().strftime('%Y%m%d')}.xlsx",
+            file_name=f"Matriz_PESTEL_{datetime.now().strftime('%Y%m%d')}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             use_container_width=True
         )
@@ -107,11 +107,11 @@ def render():
 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
 <div>
 <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-<span class="badge-pill-solid">SMURFIT WESTROCK</span>
+<span class="badge-pill-solid">LECTURA DEL ENTORNO PESTEL</span>
 <span class="badge-pill-soft">INFORME PESTEL</span>
 </div>
 <h2 style="color: #0a0a0a; margin: 4px 0 2px 0; font-size: 24px; font-weight: 600; letter-spacing: -0.6px;">Informe de Lectura del Entorno Estratégico</h2>
-<div style="color: #737373; font-size: 13px;">Complejo Industrial Yumbo · Valle del Cauca, Colombia</div>
+<div style="color: #737373; font-size: 13px;">Sistema de Análisis PESTEL · regional, Colombia</div>
 </div>
 <div style="text-align: right; font-size: 12px; color: #737373;">
 <div>Fecha: <b style="color: #0a0a0a;">{datetime.now().strftime('%d/%m/%Y')}</b></div>
@@ -123,7 +123,7 @@ def render():
 <div style="margin-bottom: 20px;">
 <h4 style="color: #0a0a0a; margin: 0 0 6px 0; font-size: 15px; font-weight: 600; letter-spacing: -0.3px;">1. Síntesis Ejecutiva</h4>
 <p style="color: #171717; font-size: 13.5px; line-height: 1.6; text-align: justify; margin: 0;">
-Durante el presente ciclo de análisis, el macroentorno de <b>Smurfit WestRock Colombia</b> registra <b>{len(df_rep_factores)} factores monitoreados</b>. Se evidencian retos operativos en el corredor Panamericano (abastecimiento de madera del Cauca hacia Yumbo) y estrés hídrico en la cuenca del Río Cauca. Simultáneamente, la <b>Ley 2232 de 2022 (plásticos de un solo uso)</b> y la demanda creciente del sector agroexportador consolidan oportunidades de liderazgo para las soluciones corrugadas y de papel kraft producidas en Yumbo.
+Durante el presente ciclo de análisis, el macroentorno de <b>la organización</b> registra <b>{len(df_rep_factores)} factores monitoreados</b>. Se evidencian retos operativos en el corredor Panamericano (abastecimiento de madera del Cauca hacia Yumbo) y estrés hídrico en la cuenca del Río Cauca. Simultáneamente, la <b>Ley 2232 de 2022 (plásticos de un solo uso)</b> y la demanda creciente del sector agroexportador consolidan oportunidades de liderazgo para las soluciones corrugadas y de papel kraft producidas en la organización.
 </p>
 </div>
 </div>""")
